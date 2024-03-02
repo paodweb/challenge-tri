@@ -13,5 +13,5 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-  base: "https:// paodweb.github.io/challenge-tri/",
+  base: "/challenge-tri/",
 })
