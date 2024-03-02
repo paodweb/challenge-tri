@@ -1,258 +1,155 @@
 <template>
-  <div>
-    <h1 class="text-2xl font-bold py-5 px-3 tracking-tight text-gray-500 sm:text-2xl shadow">
-      Liste des courses
-    </h1>
+    <TheHeading />
     <div class="races-list">
-      <ul role="list" class="divide-y divide-gray-100">
-        <li
-          v-for="race in races"
-          :key="race.email"
-          class="relative flex justify-between gap-x-6 mx-3 py-5"
-        >
-          <div class="flex min-w-0 gap-x-4">
-            <div class="min-w-0 flex-auto">
-              <p class="text-sm font-semibold leading-6 text-gray-900">
-                <router-link :to="`/race/${race.id}`">
-                  <span class="inset-x-0 -top-px bottom-0" /> {{ race.name }}
-                </router-link>
-              </p>
-              <p class="mt-1 flex text-xs leading-5 text-gray-500 d-inline">
-                <p class="relative truncate mt-1 text-gray-500">{{ race.date }}</p>
-                <a :href="race.link" class="ml-3 icon-link">  <ArrowTopRightOnSquareIcon class="h-5 w-5 text-indigo-500" /></a>
-              </p>
+        <div class="mt-8 flow-root overflow-hidden">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <table class="w-full text-left">
+                    <thead class="bg-white">
+                        <tr>
+                            <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0">course</th>
+                            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">résultats</th>
+                            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"><span class="sr-only">résultats</span></th>
+                            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"><span class="sr-only">résultats</span></th>
+                            <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="race in races" :key="race.email" class="even:bg-gray-50">
+                            <td class="relative py-4 pr-3 text-lg font-medium text-gray-800">
+                                <div class="md:flex md:items-center md:justify-between">
+                                    <div class="min-w-0 flex">
+                                        <router-link :to="`/race/${race.id}`">&nbsp;{{ race.name }}&nbsp;</router-link>
+                                    </div>
+                                    <div class="mt-4 flex md:ml-4 md:mt-0">
+                                        <p class="text-sm text-gray-500">{{ race.date }}</p>
+                                    </div>
+                                    <div class="mt-4 flex-1 md:ml-4 md:mt-0">
+                                        <a :href="race.link" class="ml-3 icon-link"><ArrowTopRightOnSquareIcon class="h-5 w-5 text-indigo-500" /></a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="hidden px-3 py-4 text-sm text-gray-500 md:table-cell">
+                                <dl class="flex w-full flex-none justify-between gap-x-8 items-center sm:w-auto">
+                                    <div class="flex w-16 gap-x-2.5">
+                                        <dt>🏃‍♀️🏃‍♂️</dt>
+                                        <dd class="text-sm font-semibold leading-6 text-gray-900">{{ discussions[0].totalComments }}</dd>
+                                    </div>
+                                </dl>
+                            </td>
+                            <td class="px-3 py-4 text-sm text-gray-500">
+                                Niveau <span class="text-sm font-semibold leading-6 text-gray-900">{{ discussions[0].totalComments }}</span>
+                            </td>
+                            <td class="px-3 py-4 text-sm text-gray-500">
+                                Coefficient <span class="text-sm font-semibold leading-6 text-gray-900">{{ discussions[0].totalComments }}</span>
+                            </td>
+                            <td class="relative py-4 pl-3 text-right text-sm font-medium">
+                                <div class="md:flex md:items-center md:justify-between">
+                                    <div class="min-w-0 flex">
+                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">
+                                            Edit<span class="sr-only">, {{ race.name }}</span>
+                                        </a>
+                                    </div>
+                                    <div class="mt-4 flex-1 md:ml-4 md:mt-0">
+                                        <router-link :to="`/race/${race.id}`">
+                                            <ChevronRightIcon class="h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
+                                        </router-link>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-          </div>
-          <div class="flex shrink-0 items-center gap-x-4">
-            <!--
-            <div class="mt-6 flex items-center space-x-4 divide-x divide-gray-200 border-t border-gray-200 pt-4 text-sm font-medium sm:ml-4 sm:mt-0 sm:border-none sm:pt-0">
-                <div class="flex flex-1 justify-center">
-                    <a href="#" class="whitespace-nowrap text-indigo-600 hover:text-indigo-500">View product</a>
-                </div>
-                <div class="flex flex-1 justify-center pl-4">
-                    <a href="#" class="whitespace-nowrap text-indigo-600 hover:text-indigo-500">Buy again</a>
-                </div>
-            </div>
-            -->
-            <router-link :to="`/race/${race.id}/update`">
-                <button
-                type="button"
-                class="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                style="cu"
-                >
-                Modifier
-                </button>
-            </router-link>
-            <!--
-            <a href="#" class="flex items-center justify-center rounded-md border border-gray-300 bg-white px-2.5 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                      <span>View Order</span>
-                      <span class="sr-only">WU88191111</span>
-            </a>
-            -->
-          </div>
-          <div class="flex shrink-0 items-center gap-x-4">
-            <div class="hidden sm:flex sm:flex-col sm:items-end">
-              <p class="text-sm leading-6 text-gray-900">{{ race.role }}</p>
-              <p v-if="race.lastSeen" class="mt-1 text-xs leading-5 text-gray-500">
-                Last seen <time :datetime="race.lastSeenDateTime">{{ race.lastSeen }}</time>
-              </p>
-              <div v-else class="mt-1 flex items-center gap-x-1.5">
-                <div class="flex-none rounded-full bg-emerald-500/20 p-1">
-                  <div class="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                </div>
-                <p class="text-xs leading-5 text-gray-500">Online</p>
-              </div>
-            </div>
-            <router-link to="/">
-              <ChevronRightIcon class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-            </router-link>
-          </div>
-        </li>
-      </ul>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup>
-import { AcademicCapIcon, ArrowDownIcon, ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
+import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
+import TheHeading from '@/components/TheHeading.vue'
+import { ChatBubbleLeftIcon, CheckCircleIcon } from '@heroicons/vue/24/outline'
 
 const races = [
-  {
-    name: 'Le trail aux pieds des Monts',
-    id: '12',
-    date: '18-fév-2024',
-    link: 'https://www.klikego.com/challenge/index.jsp?reference=1516144201179-4',
-    email: 'leslie.alexander@example.com',
-    role: 'Co-Founder / CEO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael.foster@example.com',
-    role: 'Co-Founder / CTO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Dries Vincent',
-    email: 'dries.vincent@example.com',
-    role: 'Business Relations',
-    imageUrl:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: null
-  },
-  {
-    name: 'Lindsay Walton',
-    email: 'lindsay.walton@example.com',
-    role: 'Front-end Developer',
-    imageUrl:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Courtney Henry',
-    email: 'courtney.henry@example.com',
-    role: 'Designer',
-    imageUrl:
-      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Tom Cook',
-    email: 'tom.cook@example.com',
-    role: 'Director of Product',
-    imageUrl:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: null
-  },
-  {
-    name: 'Leslie Alexander',
-    email: 'leslie.alexander@example.com',
-    role: 'Co-Founder / CEO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael.foster@example.com',
-    role: 'Co-Founder / CTO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Dries Vincent',
-    email: 'dries.vincent@example.com',
-    role: 'Business Relations',
-    imageUrl:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: null
-  },
-  {
-    name: 'Lindsay Walton',
-    email: 'lindsay.walton@example.com',
-    role: 'Front-end Developer',
-    imageUrl:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Courtney Henry',
-    email: 'courtney.henry@example.com',
-    role: 'Designer',
-    imageUrl:
-      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Tom Cook',
-    email: 'tom.cook@example.com',
-    role: 'Director of Product',
-    imageUrl:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: null
-  },
-  {
-    name: 'Leslie Alexander',
-    email: 'leslie.alexander@example.com',
-    role: 'Co-Founder / CEO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Michael Foster',
-    email: 'michael.foster@example.com',
-    role: 'Co-Founder / CTO',
-    imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Dries Vincent',
-    email: 'dries.vincent@example.com',
-    role: 'Business Relations',
-    imageUrl:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: null
-  },
-  {
-    name: 'Lindsay Walton',
-    email: 'lindsay.walton@example.com',
-    role: 'Front-end Developer',
-    imageUrl:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Courtney Henry',
-    email: 'courtney.henry@example.com',
-    role: 'Designer',
-    imageUrl:
-      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: '3h ago',
-    lastSeenDateTime: '2023-01-23T13:23Z'
-  },
-  {
-    name: 'Tom Cook',
-    email: 'tom.cook@example.com',
-    role: 'Director of Product',
-    imageUrl:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    href: '#',
-    lastSeen: null
-  }
+    {
+        id: 12,
+        name: 'Le trail aux pieds des Monts',
+        date: '18-fév-2024',
+        link: 'https://www.klikego.com/challenge/index.jsp?reference=1516144201179-4'
+    },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
+]
+
+const discussions = [
+    {
+        id: 1,
+        title: 'Atque perspiciatis et et aut ut porro voluptatem blanditiis?',
+        href: '#',
+        author: { name: 'Leslie Alexander', href: '#' },
+        date: '2d ago',
+        dateTime: '2023-01-23T22:34Z',
+        status: 'active',
+        totalComments: 18,
+        commenters: [
+            {
+                id: 12,
+                name: 'Emma Dorsey',
+                imageUrl:
+                    'https://images.unsplash.com/photo-1505840717430-882ce147ef2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+            },
+            {
+                id: 6,
+                name: 'Tom Cook',
+                imageUrl:
+                    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+            },
+            {
+                id: 4,
+                name: 'Lindsay Walton',
+                imageUrl:
+                    'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+            },
+            {
+                id: 16,
+                name: 'Benjamin Russel',
+                imageUrl:
+                    'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+            },
+            {
+                id: 23,
+                name: 'Hector Gibbons',
+                imageUrl:
+                    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+            },
+        ]
+    }
 ]
 </script>

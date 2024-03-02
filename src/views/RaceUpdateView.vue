@@ -1,6 +1,6 @@
 <template>
   <div>
-<!--
+    <!--
     <h1 class="text-2xl font-bold py-5 px-3 tracking-tight text-gray-500 sm:text-2xl shadow d-inline">
       <router-link to="/races">
         <ChevronLeftIcon class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" /> 
@@ -10,15 +10,15 @@
 -->
 
     <div class="flex shrink-0 items-center gap-x-4">
-        <router-link to="/races">
-            <ChevronLeftIcon class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" /> 
-        </router-link>
-        <h1 class="text-2xl font-bold py-5 px-3 tracking-tight text-gray-500 sm:text-2xl shadow">
-            Le trail aux pieds des Monts
-        </h1>
+      <router-link to="/races">
+        <ChevronLeftIcon class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+      </router-link>
+      <h1 class="text-2xl font-bold py-5 px-3 tracking-tight text-gray-500 sm:text-2xl shadow">
+        Le trail aux pieds des Monts
+      </h1>
     </div>
 
-<!--
+    <!--
         <p class="ml-2 mt-1 truncate text-sm text-gray-500">in Engineering</p>
 -->
 
