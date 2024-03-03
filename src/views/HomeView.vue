@@ -9,7 +9,6 @@ import TheWelcome from '../components/TheWelcome.vue'
     <nav>
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/about">About</RouterLink>
-      <RouterLink to="/races">Liste des courses</RouterLink>
     </nav>
   </main>
 </template>
