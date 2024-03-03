@@ -84,5 +84,4 @@ how to apply this css only on this page!
     padding: 0 2rem;
   }
 } */
-
 </style>

@@ -1,18 +1,57 @@
 <template>
-  <TheHeading title="Liste des courses" buttonLabel="Ajouter une course" @on-click="onClick($event)" />
+  <TheHeading
+    title="Liste des courses"
+    buttonLabel="Ajouter une course"
+    @on-click="onClick($event)"
+  />
   <div class="races-list">
     <div class="mt-8 flow-root overflow-hidden">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <table class="w-full text-left">
           <thead class="bg-white">
             <tr>
-              <th scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0">course</th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">résultats</th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"><span class="sr-only">résultats</span></th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"><span class="sr-only">résultats</span></th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"><span class="sr-only">résultats</span></th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"><span class="sr-only">résultats</span></th>
-              <th scope="col" class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500">actions</th>
+              <th
+                scope="col"
+                class="py-3 pl-4 pr-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 sm:pl-0"
+              >
+                course
+              </th>
+              <th
+                scope="col"
+                class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
+              >
+                résultats
+              </th>
+              <th
+                scope="col"
+                class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
+              >
+                <span class="sr-only">résultats</span>
+              </th>
+              <th
+                scope="col"
+                class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
+              >
+                <span class="sr-only">résultats</span>
+              </th>
+              <th
+                scope="col"
+                class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
+              >
+                <span class="sr-only">résultats</span>
+              </th>
+              <th
+                scope="col"
+                class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
+              >
+                <span class="sr-only">résultats</span>
+              </th>
+              <th
+                scope="col"
+                class="px-3 py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500"
+              >
+                actions
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -25,7 +64,7 @@
             -->
             <tr v-for="race in races" :key="race.email" class="even:bg-gray-50">
               <td class="relative py-4 pr-3 text-lg font-medium text-gray-800">
-                <div class="md:flex md:items-center md:justify-between">
+                <div class="md:flex md:items-center">
                   <div class="min-w-0 flex">
                     <router-link :to="`/race/${race.id}`">{{ race.name }}&nbsp;</router-link>
                   </div>
@@ -62,13 +101,17 @@
                 }}</span>
               </td>
               <td class="px-3 py-4 text-sm text-gray-500">
-                <span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                    🥇👩 02:18:18
+                <span
+                  class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
+                >
+                  🥇👩 02:18:18
                 </span>
               </td>
               <td class="px-3 py-4 text-sm text-gray-500">
-                <span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                    🥇👨 02:04:17
+                <span
+                  class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
+                >
+                  🥇👨 02:04:17
                 </span>
               </td>
               <td class="relative py-4 pl-3 text-right text-sm font-medium">
@@ -101,7 +144,7 @@ import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/s
 import TheHeading from '@/components/TheHeading.vue'
 
 function onClick(evt) {
-    console.log(evt)
+  console.log(evt)
 }
 
 const races = [
@@ -110,8 +153,8 @@ const races = [
     name: 'Le trail aux pieds des Monts',
     date: '18-fév-2024',
     link: 'https://www.klikego.com/challenge/index.jsp?reference=1516144201179-4'
-},
-{
+  },
+  {
     id: 21,
     name: 'Semi-marathon de Plouguin',
     date: '11-nov-2023',
