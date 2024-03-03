@@ -55,13 +55,6 @@
             </tr>
           </thead>
           <tbody>
-            <!--
-            nombre de licencié.s.es DEL
-            niveau de la course
-            coefficient de la course
-            temps de la 1ère féminine
-            temps du 1er masculin
-            -->
             <tr v-for="result in results" :key="result.ranking" class="even:bg-gray-50">
               <td class="relative py-4 pr-3 text-lg font-medium text-gray-800">
                 <div class="md:flex md:items-center">

@@ -40,3 +40,33 @@ npm run build
 ```sh
 npm run lint
 ```
+
+### Access to database
+
+api key: cuW5RcSCnotiiWWO7cVCoV
+
+app_id: cOWORcKM1fWRZcKqP6y8kk (db)
+
+entity_id: cDWR8wWPHnWRhdPwKbW50i (form)
+
+api_url: https://quintadb.com/
+
+races
+---
+GET { api_url }apps/{ app_id }/dtypes/entity/{ entity_id }.json
+
+response: [records].values
+
+field id                    field label
+---                         ---
+cxW7LMWPzbBikNW4JcK8kA      Nom de la course
+dcVCkwl8jeB4ktW6NdGmoS      Date de la course
+aWW47cJ8nbalWEW5_dU8kE      Niveau de la course
+dcQK8cWQjcSzvOWOarW7yn      Coefficient
+ddL8o5DCnkW4eAsa7cOgrR      Format de la course
+aYc8oMW4HokiklW4ZcHezb      Nombre de coureurs classés
+b1W6VdH8nnhQC2WQBdNJKN      Nombre de coureuses classées
+aOW4y2jgPcVyortmkYsJrl      Temps du premier
+blhahdSCjeW49ub2alybuH      Temps de la première
+a9ESozWO5cPQZcNdddKvXH      Lien aux résultats
+ddVSkDWO1kWPRdH0ZdKCov      Commentaire
