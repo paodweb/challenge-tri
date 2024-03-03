@@ -33,7 +33,7 @@
                   ]"
                   :aria-current="isCurrentPath(item.href) ? 'page' : undefined"
                 >
-                {{ item.name }}
+                  {{ item.name }}
                 </a>
               </div>
             </div>
@@ -56,7 +56,7 @@
             ]"
             :aria-current="isCurrentPath(item.href) ? 'page' : undefined"
           >
-          {{ item.name }}
+            {{ item.name }}
           </DisclosureButton>
         </div>
       </DisclosurePanel>

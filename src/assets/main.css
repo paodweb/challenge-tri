@@ -21,6 +21,19 @@ a,
     background-color: hsla(330, 67%, 52%, 0.2);
   }
 }
+
+a.vue-green,
+.green {
+    text-decoration: none;
+    color: hsla(160, 100%, 37%, 1) !important;
+}
+
+@media (hover: hover) {
+    a.vue-green:hover {
+        background-color: hsla(160, 100%, 37%, 0.2) !important;
+    }
+}
+
 /* 
 @media (min-width: 1024px) {
   body {
@@ -34,8 +47,3 @@ a,
     padding: 0 2rem;
   }
 } */
-
-.races-list {
-  max-height: 760px;
-  overflow-y: scroll;
-}

@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 
-//              view                    form                    component   fonction
+//              view                form                component   fonction
 //
 // Races:
-// - list       RacesListView           ...                     ...         list all races
-// - create     RaceCreateView          RaceCreateForm          ...         create 1 race
-// - update     RaceUpdateView          RaceUpdateForm          ...         update 1 race
+// - list       RacesView           ...                 ...         list all races
+// - create     RaceView            RaceForm            ...         create 1 race
+// - update     RaceView            RaceForm            ...         update 1 race
 //
 // Results:
-// - list       RaceResultsListView     ...                     ...         list the results of 1 race
-// - create     RaceResultCreateView    RaceResultCreateForm    ...         create 1 result
-// - update     RaceResultUpdateView    RaceResultUpdateForm    ...         update 1 result
+// - list       RaceResultsView     ...                 ...         list the results of 1 race
+// - create     RaceResultView      RaceResultForm      ...         create 1 result
+// - update     RaceResultView      RaceResultForm      ...         update 1 result
 //
 
 const router = createRouter({
@@ -31,14 +31,14 @@ const router = createRouter({
       component: () => import('@/views/AboutView.vue')
     },
     {
-      path: '/race/:id',
-      name: 'race',
-      component: () => import('@/views/RaceUpdateView.vue')
-    },
-    {
       path: '/races',
       name: 'races',
-      component: () => import('@/views/RacesListView.vue')
+      component: () => import('@/views/RacesView.vue')
+    },
+    {
+      path: '/race/:id',
+      name: 'race',
+      component: () => import('@/views/RaceResultsView.vue')
     }
   ]
 })
