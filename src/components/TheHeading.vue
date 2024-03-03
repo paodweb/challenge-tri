@@ -41,7 +41,7 @@ import { ChevronLeftIcon } from '@heroicons/vue/20/solid'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const backNavigation = () => { router.go(-1) }
+const backNavigation = () => { router.back() }
 
 defineProps({
   title: String,
