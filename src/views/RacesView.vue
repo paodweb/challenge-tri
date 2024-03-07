@@ -135,7 +135,7 @@
 import { onMounted, reactive, toRefs } from 'vue'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
-import { mapRaceField } from '@/helpers'
+import { mapRacesFields } from '@/helpers'
 import { fetchRacesUrl } from '@/api'
 
 const state = reactive({ races: [] })
@@ -151,23 +151,11 @@ const update = (state) => {
       return response.json()
     })
     .then((data) => {
-      Object.assign(state, { races: mapFields(data.records) })
+      Object.assign(state, { races: mapRacesFields(data.records) })
     })
     .catch((error) => {
       console.error(`could not get races: ${error}`)
     })
-}
-
-const mapFields = (records) => {
-  const obj_list = []
-  for (let record of records) {
-    let obj = { id: record.id }
-    for (const [key, value] of Object.entries(record.values)) {
-      Object.assign(obj, mapRaceField(key, value))
-    }
-    obj_list.push(obj)
-  }
-  return obj_list
 }
 
 const fcnUpdate = () => update(state)

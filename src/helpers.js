@@ -1,3 +1,15 @@
+export const mapRacesFields = (records) => {
+  const obj_list = []
+  for (let record of records) {
+    let obj = { id: record.id }
+    for (const [key, value] of Object.entries(record.values)) {
+      Object.assign(obj, mapRaceField(key, value))
+    }
+    obj_list.push(obj)
+  }
+  return obj_list
+}
+
 const mapCoefficient = (key) => {
   if (key == 'Triathlon • x3') {
     return '3.0'
@@ -32,7 +44,7 @@ const mapLevel = (key) => {
   }
 }
 
-export const mapRaceField = (key, value) => {
+const mapRaceField = (key, value) => {
   if (key == import.meta.env.VITE_RACE_TITLE) {
     return { title: value }
   } else if (key == import.meta.env.VITE_RACE_DATE) {

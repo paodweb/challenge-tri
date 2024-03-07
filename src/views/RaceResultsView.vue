@@ -59,9 +59,7 @@
               <td class="relative py-4 pr-3 text-lg font-medium text-gray-800">
                 <div class="md:flex md:items-center">
                   <div class="min-w-0 flex">
-                    <router-link :to="`/race/${result.id}`"
-                      >{{ result.licensee }}&nbsp;</router-link
-                    >
+                    <router-link to="#!">{{ result.licensee }}&nbsp;</router-link>
                   </div>
                   <div class="mt-4 flex md:ml-4 md:mt-0">
                     <span
@@ -134,7 +132,7 @@ const races = {
     link: 'https://www.klikego.com/challenge/index.jsp?reference=1516144201179-4',
     results: []
   },
-  21: {
+  'bhW4CsW5DcPQnsW6tdMcfi': {
     title: 'Semi-marathon de Plouguin',
     date: '11-nov-2023',
     link: 'https://www.klikego.com/resultats/semi-marathon-et-10km-de-plouguin-2023/1633737828041-3',

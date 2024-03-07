@@ -43,6 +43,8 @@ npm run lint
 
 ## glossary
 
+course :
+
 * Nom de la course :                title
 * Date de la course :               date
 * Niveau de la course :             level
@@ -54,3 +56,13 @@ npm run lint
 * Temps du premier masculin :       time_first_man
 * Lien aux résultats :              results_url
 * Commentaire :                     comment
+
+résultats :
+
+* Temps de la personne :                        time
+* Classement de la personne :                   ranking
+* Nombre de coureu.rs.ses dans la catégorie :   classifiedCategory
+* Classement dans la catégorie :                categoryRanking
+* Bonus photo, vidéo, etc. :                    bonus
+* Nombre de points acquis sur une course :      points
+* Licencié.e :                                  licensee
