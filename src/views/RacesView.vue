@@ -58,7 +58,6 @@
             <tr v-for="race in races" :key="race.id" class="even:bg-gray-50">
               <td class="relative py-4 pr-3 text-lg font-medium text-gray-800">
                 <div class="md:flex md:items-center">
-                  <!-- nombre de licencié.s.es DEL -->
                   <div class="min-w-0 flex">
                     <router-link :to="`/race/${race.id}`">{{ race.title }}&nbsp;</router-link>
                   </div>
@@ -75,6 +74,7 @@
               <td class="hidden px-3 py-4 text-sm text-gray-500 md:table-cell">
                 <dl class="flex w-full flex-none justify-between gap-x-8 items-center sm:w-auto">
                   <div class="flex w-16 gap-x-2.5">
+                    <!-- nombre de licencié.s.es DEL -->
                     <dt>🏃‍♀️🏃‍♂️</dt>
                     <dd class="text-sm font-semibold leading-6 text-gray-900">{{ 18 }}</dd>
                   </div>
@@ -136,17 +136,13 @@ import { onMounted, reactive, toRefs } from 'vue'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
 import { mapRaceField } from '@/helpers'
+import { fetchRacesUrl } from '@/api'
 
 const state = reactive({ races: [] })
 const { races } = toRefs(state)
 
 const update = (state) => {
-  const api_key = import.meta.env.VITE_QUINTADB_API_KEY
-  const api_url = import.meta.env.VITE_QUINTADB_API_URL
-  const app_id = import.meta.env.VITE_QUINTADB_APP_ID
-  const entity_id = import.meta.env.VITE_QUINTADB_ENTITY_ID
-  const url = `${api_url}/apps/${app_id}/dtypes/entity/${entity_id}.json?rest_api_key=${api_key}`
-  const fetchRaces = fetch(`${url}`)
+  const fetchRaces = fetch(fetchRacesUrl())
   fetchRaces
     .then((response) => {
       if (!response.ok) {
