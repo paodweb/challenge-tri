@@ -142,7 +142,7 @@ const { races } = toRefs(state)
 
 const update = (state) => {
   const url = `${import.meta.env.VITE_API_URL}/apps/${import.meta.env.VITE_APP_ID}/dtypes/entity/${import.meta.env.VITE_ENTITY_ID}.json`
-  const fetchRaces = fetch(`${url}?rest_api_key=${import.meta.env.VITE_API_KEY}`)
+  const fetchRaces = fetch(`${url}?rest_api_key=${import.meta.env.VITE_QUINTADB_API_KEY}`)
   fetchRaces
     .then((response) => {
       if (!response.ok) {
