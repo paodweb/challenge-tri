@@ -132,7 +132,7 @@ const races = {
     link: 'https://www.klikego.com/challenge/index.jsp?reference=1516144201179-4',
     results: []
   },
-  'bhW4CsW5DcPQnsW6tdMcfi': {
+  bhW4CsW5DcPQnsW6tdMcfi: {
     title: 'Semi-marathon de Plouguin',
     date: '11-nov-2023',
     link: 'https://www.klikego.com/resultats/semi-marathon-et-10km-de-plouguin-2023/1633737828041-3',
