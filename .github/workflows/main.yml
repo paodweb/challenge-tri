@@ -31,6 +31,20 @@ jobs:
         run: npm run build
         env:
           VITE_QUINTADB_API_KEY: ${{ secrets.QUINTADB_API_KEY }}
+          VITE_QUINTADB_API_URL: ${{ vars.QUINTADB_API_URL }}
+          VITE_QUINTADB_APP_ID: ${{ vars.QUINTADB_APP_ID }}
+          VITE_QUINTADB_ENTITY_ID: ${{ vars.QUINTADB_ENTITY_ID }}
+          VITE_RACE_TITLE: ${{ vars.VITE_RACE_TITLE }}
+          VITE_RACE_DATE: ${{ vars.VITE_RACE_DATE }}
+          VITE_RACE_LEVEL: ${{ vars.VITE_RACE_LEVEL }}
+          VITE_RACE_COEFFICIENT: ${{ vars.VITE_RACE_COEFFICIENT }}
+          VITE_RACE_FORMAT: ${{ vars.VITE_RACE_FORMAT }}
+          VITE_RACE_NUMBER_CLASSIFIED_WOMEN_RUNNERS: ${{ vars.VITE_RACE_NUMBER_CLASSIFIED_WOMEN_RUNNERS }}
+          VITE_RACE_NUMBER_CLASSIFIED_MEN_RUNNERS: ${{ vars.VITE_RACE_NUMBER_CLASSIFIED_MEN_RUNNERS }}
+          VITE_RACE_TIME_FIRST_WOMAN: ${{ vars.VITE_RACE_TIME_FIRST_WOMAN }}
+          VITE_RACE_TIME_FIRST_MAN: ${{ vars.VITE_RACE_TIME_FIRST_MAN }}
+          VITE_RACE_RESULTS_URL: ${{ vars.VITE_RACE_RESULTS_URL }}
+          VITE_RACE_COMMENT: ${{ vars.VITE_RACE_COMMENT }}
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

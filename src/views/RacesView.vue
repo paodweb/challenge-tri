@@ -141,8 +141,12 @@ const state = reactive({ races: [] })
 const { races } = toRefs(state)
 
 const update = (state) => {
-  const url = `${import.meta.env.VITE_API_URL}/apps/${import.meta.env.VITE_APP_ID}/dtypes/entity/${import.meta.env.VITE_ENTITY_ID}.json`
-  const fetchRaces = fetch(`${url}?rest_api_key=${import.meta.env.VITE_QUINTADB_API_KEY}`)
+  const api_key = import.meta.env.VITE_QUINTADB_API_KEY
+  const api_url = import.meta.env.VITE_QUINTADB_API_URL
+  const app_id = import.meta.env.VITE_QUINTADB_APP_ID
+  const entity_id = import.meta.env.VITE_QUINTADB_ENTITY_ID
+  const url = `${api_url}/apps/${app_id}/dtypes/entity/${entity_id}.json?rest_api_key=${api_key}`
+  const fetchRaces = fetch(`${url}`)
   fetchRaces
     .then((response) => {
       if (!response.ok) {
