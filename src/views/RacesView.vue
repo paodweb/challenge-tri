@@ -55,18 +55,12 @@
             </tr>
           </thead>
           <tbody>
-            <!--
-            nombre de licencié.s.es DEL
-            niveau de la course
-            coefficient de la course
-            temps de la 1ère féminine
-            temps du 1er masculin
-            -->
-            <tr v-for="race in races" :key="race.email" class="even:bg-gray-50">
+            <tr v-for="race in races" :key="race.id" class="even:bg-gray-50">
               <td class="relative py-4 pr-3 text-lg font-medium text-gray-800">
                 <div class="md:flex md:items-center">
+                  <!-- nombre de licencié.s.es DEL -->
                   <div class="min-w-0 flex">
-                    <router-link :to="`/race/${race.id}`">{{ race.name }}&nbsp;</router-link>
+                    <router-link :to="`/race/${race.id}`">{{ race.title }}&nbsp;</router-link>
                   </div>
                   <div class="mt-4 flex md:ml-4 md:mt-0">
                     <p class="text-sm text-gray-500">{{ race.date }}</p>
@@ -82,44 +76,42 @@
                 <dl class="flex w-full flex-none justify-between gap-x-8 items-center sm:w-auto">
                   <div class="flex w-16 gap-x-2.5">
                     <dt>🏃‍♀️🏃‍♂️</dt>
-                    <dd class="text-sm font-semibold leading-6 text-gray-900">
-                      {{ discussions[0].totalComments }}
-                    </dd>
+                    <dd class="text-sm font-semibold leading-6 text-gray-900">{{ 18 }}</dd>
                   </div>
                 </dl>
               </td>
               <td class="px-3 py-4 text-sm text-gray-500">
+                <!-- niveau de la course -->
                 Niveau
-                <span class="text-sm font-semibold leading-6 text-gray-900">{{
-                  discussions[0].totalComments
-                }}</span>
+                <span class="text-sm font-semibold leading-6 text-gray-900">{{ race.level }}</span>
               </td>
               <td class="px-3 py-4 text-sm text-gray-500">
+                <!-- coefficient de la course -->
                 Coefficient
                 <span class="text-sm font-semibold leading-6 text-gray-900">{{
-                  discussions[0].totalComments
+                  race.coefficient
                 }}</span>
               </td>
               <td class="px-3 py-4 text-sm text-gray-500">
+                <!-- temps de la 1ère féminine -->
                 <span
                   class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
                 >
-                  🥇👩 02:18:18
+                  🥇👩 {{ race.time_first_woman }}
                 </span>
               </td>
               <td class="px-3 py-4 text-sm text-gray-500">
+                <!-- temps du 1er masculin -->
                 <span
                   class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
                 >
-                  🥇👨 02:04:17
+                  🥇👨 {{ race.time_first_man }}
                 </span>
               </td>
               <td class="relative py-4 pl-3 text-right text-sm font-medium">
                 <div class="md:flex md:items-center md:justify-between">
                   <div class="min-w-0 flex">
-                    <a href="#" class="text-indigo-600 hover:text-indigo-900">
-                      Modifier<span class="sr-only">, {{ race.name }}</span>
-                    </a>
+                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
                   </div>
                   <div class="mt-4 flex-1 md:ml-4 md:mt-0">
                     <router-link :to="`/race/${race.id}`">
@@ -140,246 +132,51 @@
 </template>
 
 <script setup>
+import { onMounted, reactive, toRefs } from 'vue'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
+import { mapRaceField } from '@/helpers'
+
+const state = reactive({ races: [] })
+const { races } = toRefs(state)
+
+const update = (state) => {
+  const url = `${import.meta.env.VITE_API_URL}/apps/${import.meta.env.VITE_APP_ID}/dtypes/entity/${import.meta.env.VITE_ENTITY_ID}.json`
+  const fetchRaces = fetch(`${url}?rest_api_key=${import.meta.env.VITE_API_KEY}`)
+  fetchRaces
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`)
+      }
+      return response.json()
+    })
+    .then((data) => {
+      Object.assign(state, { races: mapFields(data.records) })
+    })
+    .catch((error) => {
+      console.error(`could not get races: ${error}`)
+    })
+}
+
+const mapFields = (records) => {
+  const obj_list = []
+  for (let record of records) {
+    let obj = { id: record.id }
+    for (const [key, value] of Object.entries(record.values)) {
+      Object.assign(obj, mapRaceField(key, value))
+    }
+    obj_list.push(obj)
+  }
+  return obj_list
+}
+
+const fcnUpdate = () => update(state)
 
 function onClick(evt) {
   console.log(evt)
 }
 
-const races = [
-  {
-    id: 12,
-    name: 'Le trail aux pieds des Monts',
-    date: '18-fév-2024',
-    link: 'https://www.klikego.com/challenge/index.jsp?reference=1516144201179-4'
-  },
-  {
-    id: 21,
-    name: 'Semi-marathon de Plouguin',
-    date: '11-nov-2023',
-    link: 'https://www.klikego.com/resultats/semi-marathon-et-10km-de-plouguin-2023/1633737828041-3'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  },
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    email: 'lindsay.walton@example.com',
-    role: 'Member'
-  }
-]
-
-const discussions = [
-  {
-    id: 1,
-    title: 'Atque perspiciatis et et aut ut porro voluptatem blanditiis?',
-    href: '#',
-    author: { name: 'Leslie Alexander', href: '#' },
-    date: '2d ago',
-    dateTime: '2023-01-23T22:34Z',
-    status: 'active',
-    totalComments: 18,
-    commenters: [
-      {
-        id: 12,
-        name: 'Emma Dorsey',
-        imageUrl:
-          'https://images.unsplash.com/photo-1505840717430-882ce147ef2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-      },
-      {
-        id: 6,
-        name: 'Tom Cook',
-        imageUrl:
-          'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-      },
-      {
-        id: 4,
-        name: 'Lindsay Walton',
-        imageUrl:
-          'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-      },
-      {
-        id: 16,
-        name: 'Benjamin Russel',
-        imageUrl:
-          'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-      },
-      {
-        id: 23,
-        name: 'Hector Gibbons',
-        imageUrl:
-          'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-      }
-    ]
-  }
-]
+onMounted(fcnUpdate)
 </script>
 
 <style scoped>

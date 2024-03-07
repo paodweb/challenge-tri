@@ -59,13 +59,16 @@
               <td class="relative py-4 pr-3 text-lg font-medium text-gray-800">
                 <div class="md:flex md:items-center">
                   <div class="min-w-0 flex">
-                    <router-link :to="`/race/${result.id}`">{{ result.licensee }}&nbsp;</router-link>
+                    <router-link :to="`/race/${result.id}`"
+                      >{{ result.licensee }}&nbsp;</router-link
+                    >
                   </div>
                   <div class="mt-4 flex md:ml-4 md:mt-0">
                     <span
-                        class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                        {{ result.time }}
-                      </span>
+                      class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
+                    >
+                      {{ result.time }}
+                    </span>
                   </div>
                 </div>
               </td>

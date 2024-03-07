@@ -41,32 +41,16 @@ npm run build
 npm run lint
 ```
 
-### Access to database
+## glossary
 
-api key: cuW5RcSCnotiiWWO7cVCoV
-
-app_id: cOWORcKM1fWRZcKqP6y8kk (db)
-
-entity_id: cDWR8wWPHnWRhdPwKbW50i (form)
-
-api_url: https://quintadb.com/
-
-races
----
-GET { api_url }apps/{ app_id }/dtypes/entity/{ entity_id }.json
-
-response: [records].values
-
-field id                    field label
----                         ---
-cxW7LMWPzbBikNW4JcK8kA      Nom de la course
-dcVCkwl8jeB4ktW6NdGmoS      Date de la course
-aWW47cJ8nbalWEW5_dU8kE      Niveau de la course
-dcQK8cWQjcSzvOWOarW7yn      Coefficient
-ddL8o5DCnkW4eAsa7cOgrR      Format de la course
-aYc8oMW4HokiklW4ZcHezb      Nombre de coureurs classés
-b1W6VdH8nnhQC2WQBdNJKN      Nombre de coureuses classées
-aOW4y2jgPcVyortmkYsJrl      Temps du premier
-blhahdSCjeW49ub2alybuH      Temps de la première
-a9ESozWO5cPQZcNdddKvXH      Lien aux résultats
-ddVSkDWO1kWPRdH0ZdKCov      Commentaire
+* Nom de la course :                title
+* Date de la course :               date
+* Niveau de la course :             level
+* Coefficient de la course :        coefficient
+* Format de la course :             format
+* Nombre de coureuses classées :    number_classified_women_runners
+* Nombre de coureurs classés :      number_classified_men_runners
+* Temps de la première féminine :   time_first_woman
+* Temps du premier masculin :       time_first_man
+* Lien aux résultats :              results_url
+* Commentaire :                     comment
