@@ -6,15 +6,15 @@ const getQuintadbApiKeys = () => {
 }
 
 export const fetchRacesUrl = () => {
-  const race_id = import.meta.env.VITE_QDB_RACE_ID
+  const entity_id = import.meta.env.VITE_QDB_RACE_ID
   let api_key, api_url, app_id
   ;[api_key, api_url, app_id] = getQuintadbApiKeys()
-  return `${api_url}/apps/${app_id}/dtypes/entity/${race_id}.json?rest_api_key=${api_key}`
+  return `${api_url}/apps/${app_id}/dtypes/entity/${entity_id}.json?rest_api_key=${api_key}`
 }
 
 export const fetchResultsUrl = () => {
-  const result_id = import.meta.env.VITE_QDB_RESULT_ID
+  const entity_id = import.meta.env.VITE_QDB_RESULT_ID
   let api_key, api_url, app_id
   ;[api_key, api_url, app_id] = getQuintadbApiKeys()
-  return `${api_url}/apps/${app_id}/dtypes/entity/${result_id}.json?rest_api_key=${api_key}`
+  return `${api_url}/apps/${app_id}/dtypes/entity/${entity_id}.json?rest_api_key=${api_key}`
 }

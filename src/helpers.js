@@ -10,6 +10,18 @@ export const mapRacesFields = (records) => {
   return obj_list
 }
 
+export const mapResultFields = (records) => {
+  const obj_list = []
+  for (let record of records) {
+    let obj = { id: record.id }
+    for (const [key, value] of Object.entries(record.values)) {
+      Object.assign(obj, mapRaceField(key, value))
+    }
+    obj_list.push(obj)
+  }
+  return obj_list
+}
+
 // races fields
 const RACE_TITLE = 'cxW7LMWPzbBikNW4JcK8kA'
 const RACE_DATE = 'dcVCkwl8jeB4ktW6NdGmoS'
@@ -22,6 +34,7 @@ const RACE_TIME_FIRST_WOMAN = 'blhahdSCjeW49ub2alybuH'
 const RACE_TIME_FIRST_MAN = 'aOW4y2jgPcVyortmkYsJrl'
 const RACE_RESULTS_URL = 'a9ESozWO5cPQZcNdddKvXH'
 const RACE_COMMENT = 'ddVSkDWO1kWPRdH0ZdKCov'
+const RACE_CHILDREN = 'bjWQLQWQfhWQ_dUSk6DSoE'
 
 // results fields
 const RACE_COMMENT_ = 'ddVSkDWO1kWPRdH0ZdKCov'
@@ -83,6 +96,8 @@ const mapRaceField = (key, value) => {
     return { link: value }
   } else if (key == RACE_COMMENT) {
     return { comment: value }
+  } else if (key == RACE_CHILDREN) {
+    return { children: value }
   } else {
     return {}
   }

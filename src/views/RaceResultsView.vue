@@ -4,7 +4,7 @@
     buttonLabel="Ajouter un résultat"
     @on-click="onClick($event)"
   />
-  <div class="races-list">
+  <div class="results-list">
     <div class="mt-8 flow-root overflow-hidden">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <table class="w-full text-left">
@@ -121,53 +121,32 @@ import { onMounted, reactive, toRefs } from 'vue'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
 import { useRoute } from 'vue-router'
+import { fetchResultsUrl } from '@/api'
+import { mapResultFields } from '@/helpers'
 
 const route = useRoute()
 const state = reactive({ title: 'no title', results: [] })
 const { title, results } = toRefs(state)
-const races = {
-  12: {
-    title: 'Le trail aux pieds des Monts',
-    date: '18-fév-2024',
-    link: 'https://www.klikego.com/challenge/index.jsp?reference=1516144201179-4',
-    results: []
-  },
-  bhW4CsW5DcPQnsW6tdMcfi: {
-    title: 'Semi-marathon de Plouguin',
-    date: '11-nov-2023',
-    link: 'https://www.klikego.com/resultats/semi-marathon-et-10km-de-plouguin-2023/1633737828041-3',
-    results: [
-      {
-        id: 183,
-        ranking: 183,
-        time: '01:55:25',
-        licensee: 'FER Stephane',
-        classifiedCategory: 14,
-        categoryRanking: 14,
-        bonus: 0,
-        points: 150
-      },
-      {
-        id: 101,
-        ranking: 101,
-        time: '01:40:09',
-        licensee: 'LE GOUX Julien',
-        classifiedCategory: 19,
-        categoryRanking: 19,
-        bonus: 0,
-        points: 150
-      }
-    ]
-  }
-}
 
 const update = (state) => {
-  console.log(route.params)
-  Object.assign(state, {
-    title: races[route.params.id].title,
-    results: races[route.params.id].results
-  })
-  console.log(state)
+  const route = useRoute()
+  const fetchResults = fetch(fetchResultsUrl(route.params.id))
+  console.log(route.params.id)
+  fetchResults
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`)
+      }
+      return response.json()
+    })
+    .then((data) => {
+      console.log('***', data.records)
+      // console.log('***', mapResultFields(data.records))
+      // Object.assign(state, { races: mapRacesFields(data.records) })
+    })
+    .catch((error) => {
+      console.error(`could not get results: ${error}`)
+    })
 }
 
 const fcnUpdate = () => update(state)
@@ -180,7 +159,7 @@ onMounted(fcnUpdate)
 </script>
 
 <style scoped>
-.races-list {
+.results-list {
   max-height: 760px;
   overflow-y: scroll;
 }

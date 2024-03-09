@@ -75,8 +75,9 @@
                 <dl class="flex w-full flex-none justify-between gap-x-8 items-center sm:w-auto">
                   <div class="flex w-16 gap-x-2.5">
                     <!-- nombre de licencié.s.es DEL -->
-                    <dt>🏃‍♀️🏃‍♂️</dt>
-                    <dd class="text-sm font-semibold leading-6 text-gray-900">{{ 18 }}</dd>
+                    <span class="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20">
+                        🏃‍♀️🏃‍♂️ {{ race.children }}
+                    </span>
                   </div>
                 </dl>
               </td>
@@ -135,8 +136,8 @@
 import { onMounted, reactive, toRefs } from 'vue'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
-import { mapRacesFields } from '@/helpers'
 import { fetchRacesUrl } from '@/api'
+import { mapRacesFields } from '@/helpers'
 
 const state = reactive({ races: [] })
 const { races } = toRefs(state)
