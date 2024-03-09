@@ -50,11 +50,11 @@ course :
 * Niveau de la course :             level
 * Coefficient de la course :        coefficient
 * Format de la course :             format
-* Nombre de coureuses classées :    number_classified_women_runners
-* Nombre de coureurs classés :      number_classified_men_runners
-* Temps de la première féminine :   time_first_woman
-* Temps du premier masculin :       time_first_man
-* Lien aux résultats :              results_url
+* Nombre de coureuses classées :    numberClassifiedWomenRunners
+* Nombre de coureurs classés :      numberClassifiedMenRunners
+* Temps de la première féminine :   timeFirstWoman
+* Temps du premier masculin :       timeFirstMan
+* Lien aux résultats :              link
 * Commentaire :                     comment
 
 résultats :
@@ -63,6 +63,7 @@ résultats :
 * Classement de la personne :                   ranking
 * Nombre de coureu.rs.ses dans la catégorie :   classifiedCategory
 * Classement dans la catégorie :                categoryRanking
+* Arbitre :                                     referee
 * Bonus photo, vidéo, etc. :                    bonus
 * Nombre de points acquis sur une course :      points
 * Licencié.e :                                  licensee

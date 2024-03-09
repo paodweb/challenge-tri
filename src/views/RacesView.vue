@@ -4,7 +4,7 @@
     buttonLabel="Ajouter une course"
     @on-click="onClick($event)"
   />
-  <div class="races-list">
+  <div class="objects-list">
     <div class="mt-8 flow-root overflow-hidden">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <table class="w-full text-left">
@@ -59,7 +59,7 @@
               <td class="relative py-4 pr-3 text-lg font-medium text-gray-800">
                 <div class="md:flex md:items-center">
                   <div class="min-w-0 flex">
-                    <router-link :to="`/race/${race.id}`">{{ race.title }}&nbsp;</router-link>
+                    <router-link :to="`/race/${race.id}/${race.title}`">{{ race.title }}&nbsp;</router-link>
                   </div>
                   <div class="mt-4 flex md:ml-4 md:mt-0">
                     <p class="text-sm text-gray-500">{{ race.date }}</p>
@@ -75,8 +75,10 @@
                 <dl class="flex w-full flex-none justify-between gap-x-8 items-center sm:w-auto">
                   <div class="flex w-16 gap-x-2.5">
                     <!-- nombre de licencié.s.es DEL -->
-                    <span class="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20">
-                        🏃‍♀️🏃‍♂️ {{ race.children }}
+                    <span
+                      class="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20"
+                    >
+                      🏃‍♀️🏃‍♂️ {{ race.children }}
                     </span>
                   </div>
                 </dl>
@@ -115,7 +117,7 @@
                     <a href="#" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
                   </div>
                   <div class="mt-4 flex-1 md:ml-4 md:mt-0">
-                    <router-link :to="`/race/${race.id}`">
+                    <router-link :to="`/race/${race.id}/${race.title}`">
                       <ChevronRightIcon
                         class="h-5 w-5 flex-none text-indigo-600"
                         aria-hidden="true"
@@ -136,14 +138,14 @@
 import { onMounted, reactive, toRefs } from 'vue'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
-import { fetchRacesUrl } from '@/api'
+import { getApiRaces } from '@/api'
 import { mapRacesFields } from '@/helpers'
 
 const state = reactive({ races: [] })
 const { races } = toRefs(state)
 
 const update = (state) => {
-  const fetchRaces = fetch(fetchRacesUrl())
+  const fetchRaces = fetch(getApiRaces())
   fetchRaces
     .then((response) => {
       if (!response.ok) {
@@ -152,6 +154,7 @@ const update = (state) => {
       return response.json()
     })
     .then((data) => {
+      // const races = state.races.push(...objects)
       Object.assign(state, { races: mapRacesFields(data.records) })
     })
     .catch((error) => {
@@ -167,10 +170,3 @@ function onClick(evt) {
 
 onMounted(fcnUpdate)
 </script>
-
-<style scoped>
-.races-list {
-  max-height: 760px;
-  overflow-y: scroll;
-}
-</style>

@@ -47,3 +47,8 @@ a.vue-green,
     padding: 0 2rem;
   }
 } */
+
+.objects-list {
+  max-height: 760px;
+  overflow-y: scroll;
+}

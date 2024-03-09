@@ -1,27 +1,3 @@
-export const mapRacesFields = (records) => {
-  const obj_list = []
-  for (let record of records) {
-    let obj = { id: record.id }
-    for (const [key, value] of Object.entries(record.values)) {
-      Object.assign(obj, mapRaceField(key, value))
-    }
-    obj_list.push(obj)
-  }
-  return obj_list
-}
-
-export const mapResultFields = (records) => {
-  const obj_list = []
-  for (let record of records) {
-    let obj = { id: record.id }
-    for (const [key, value] of Object.entries(record.values)) {
-      Object.assign(obj, mapRaceField(key, value))
-    }
-    obj_list.push(obj)
-  }
-  return obj_list
-}
-
 // races fields
 const RACE_TITLE = 'cxW7LMWPzbBikNW4JcK8kA'
 const RACE_DATE = 'dcVCkwl8jeB4ktW6NdGmoS'
@@ -36,8 +12,18 @@ const RACE_RESULTS_URL = 'a9ESozWO5cPQZcNdddKvXH'
 const RACE_COMMENT = 'ddVSkDWO1kWPRdH0ZdKCov'
 const RACE_CHILDREN = 'bjWQLQWQfhWQ_dUSk6DSoE'
 
-// results fields
-const RACE_COMMENT_ = 'ddVSkDWO1kWPRdH0ZdKCov'
+export const mapRacesFields = (records) => {
+  const obj_list = []
+  for (let record of records) {
+    let obj = { id: record.id }
+    for (const [key, value] of Object.entries(record.values)) {
+      // convert field ID into field name
+      Object.assign(obj, mapRaceField(key, value))
+    }
+    obj_list.push(obj)
+  }
+  return obj_list
+}
 
 const mapCoefficient = (key) => {
   if (key == 'Triathlon • x3') {
@@ -73,6 +59,7 @@ const mapLevel = (key) => {
   }
 }
 
+// convert field ID into field name
 const mapRaceField = (key, value) => {
   if (key == RACE_TITLE) {
     return { title: value }
@@ -85,19 +72,71 @@ const mapRaceField = (key, value) => {
   } else if (key == RACE_FORMAT) {
     return { format: value }
   } else if (key == RACE_NUMBER_CLASSIFIED_WOMEN_RUNNERS) {
-    return { number_classified_women_runners: value }
+    return { numberClassifiedWomenRunners: value }
   } else if (key == RACE_NUMBER_CLASSIFIED_MEN_RUNNERS) {
-    return { number_classified_men_runners: value }
+    return { numberClassifiedMenRunners: value }
   } else if (key == RACE_TIME_FIRST_WOMAN) {
-    return { time_first_woman: value }
+    return { timeFirstWoman: value }
   } else if (key == RACE_TIME_FIRST_MAN) {
-    return { time_first_man: value }
+    return { timeFirstMan: value }
   } else if (key == RACE_RESULTS_URL) {
     return { link: value }
   } else if (key == RACE_COMMENT) {
     return { comment: value }
   } else if (key == RACE_CHILDREN) {
     return { children: value }
+  } else {
+    return {}
+  }
+}
+
+// results fields
+const RESULT_RELATION = 'aewCkDWQrdVkldTdy1quOq'
+const RESULT_TIME = 'dcP0FdTSnfWR4QWPb5W5qR'
+const RESULT_RANKING = 'aMWPtcHdLpCOkalxfPu3Pg'
+const RESULT_CLASSIFIED_CATEGORY = 'dcGSoOWPHcLQSCWPeWkCo7'
+const RESULT_CATEGORY_RANKING = 'bUW6jIW4HlW5JdGWvWemoR'
+const RESULT_REFEREE = 'dcL8kbW5zmWPxcPZWKW4uP'
+const RESULT_BONUS = 'ddKSk9WRnjW4JcReebWPv4'
+const RESULT_POINTS = 'auyCoscNHhWQuanmo0iCoA'
+const RESULT_LICENSEE = 'dcO8k-vSjnBkpcPSkpn8km'
+
+export const mapResultFields = (race_id, records) => {
+  const obj_list = []
+  for (let record of records) {
+    // filter results
+    if (record.rel_values[RESULT_RELATION].includes(race_id)) {
+      let obj = { id: record.id }
+      for (const [key, value] of Object.entries(record.values)) {
+        // convert field ID into field name
+        Object.assign(obj, mapResultField(key, value))
+      }
+      obj_list.push(obj)
+    }
+  }
+  return obj_list
+}
+
+// convert field ID into field name
+const mapResultField = (key, value) => {
+  if (key == RESULT_RELATION) {
+    return { relation: value }
+  } else if (key == RESULT_TIME) {
+    return { time: value }
+  } else if (key == RESULT_RANKING) {
+    return { ranking: value }
+  } else if (key == RESULT_CLASSIFIED_CATEGORY) {
+    return { classifiedCategory: value }
+  } else if (key == RESULT_CATEGORY_RANKING) {
+    return { categoryRanking: value }
+  } else if (key == RESULT_REFEREE) {
+    return { referee: value }
+  } else if (key == RESULT_BONUS) {
+    return { bonus: value }
+  } else if (key == RESULT_POINTS) {
+    return { points: value }
+  } else if (key == RESULT_LICENSEE) {
+    return { licensee: value }
   } else {
     return {}
   }

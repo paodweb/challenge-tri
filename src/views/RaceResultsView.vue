@@ -4,7 +4,7 @@
     buttonLabel="Ajouter un résultat"
     @on-click="onClick($event)"
   />
-  <div class="results-list">
+  <div class="objects-list">
     <div class="mt-8 flow-root overflow-hidden">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <table class="w-full text-left">
@@ -65,7 +65,7 @@
                     <span
                       class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
                     >
-                      {{ result.time }}
+                      ⌚ {{ result.time }}
                     </span>
                   </div>
                 </div>
@@ -121,17 +121,15 @@ import { onMounted, reactive, toRefs } from 'vue'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
 import { useRoute } from 'vue-router'
-import { fetchResultsUrl } from '@/api'
+import { getApiResults } from '@/api'
 import { mapResultFields } from '@/helpers'
 
-const route = useRoute()
 const state = reactive({ title: 'no title', results: [] })
 const { title, results } = toRefs(state)
 
 const update = (state) => {
   const route = useRoute()
-  const fetchResults = fetch(fetchResultsUrl(route.params.id))
-  console.log(route.params.id)
+  const fetchResults = fetch(getApiResults(route.params.id))
   fetchResults
     .then((response) => {
       if (!response.ok) {
@@ -140,9 +138,7 @@ const update = (state) => {
       return response.json()
     })
     .then((data) => {
-      console.log('***', data.records)
-      // console.log('***', mapResultFields(data.records))
-      // Object.assign(state, { races: mapRacesFields(data.records) })
+      Object.assign(state, { title: route.params.title, results: mapResultFields(route.params.id, data.records) })
     })
     .catch((error) => {
       console.error(`could not get results: ${error}`)
@@ -157,10 +153,3 @@ function onClick(evt) {
 
 onMounted(fcnUpdate)
 </script>
-
-<style scoped>
-.results-list {
-  max-height: 760px;
-  overflow-y: scroll;
-}
-</style>
