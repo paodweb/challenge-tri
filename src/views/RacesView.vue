@@ -59,7 +59,9 @@
               <td class="relative py-4 pr-3 text-lg font-medium text-gray-800">
                 <div class="md:flex md:items-center">
                   <div class="min-w-0 flex">
-                    <router-link :to="`/race/${race.id}/${race.title}`">{{ race.title }}&nbsp;</router-link>
+                    <router-link :to="`/race/${race.id}`"
+                      >{{ race.title }}&nbsp;</router-link
+                    >
                   </div>
                   <div class="mt-4 flex md:ml-4 md:mt-0">
                     <p class="text-sm text-gray-500">{{ race.date }}</p>
@@ -100,7 +102,7 @@
                 <span
                   class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
                 >
-                  🥇👩 {{ race.time_first_woman }}
+                  🥇👩 {{ race.timeFirstWoman }}
                 </span>
               </td>
               <td class="px-3 py-4 text-sm text-gray-500">
@@ -108,7 +110,7 @@
                 <span
                   class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
                 >
-                  🥇👨 {{ race.time_first_man }}
+                  🥇👨 {{ race.timeFirstMan }}
                 </span>
               </td>
               <td class="relative py-4 pl-3 text-right text-sm font-medium">
@@ -117,7 +119,7 @@
                     <a href="#" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
                   </div>
                   <div class="mt-4 flex-1 md:ml-4 md:mt-0">
-                    <router-link :to="`/race/${race.id}/${race.title}`">
+                    <router-link :to="`/race/${race.id}`">
                       <ChevronRightIcon
                         class="h-5 w-5 flex-none text-indigo-600"
                         aria-hidden="true"
@@ -135,16 +137,18 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, toRefs } from 'vue'
+import { onMounted, reactive, toRaw, toRefs } from 'vue'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
 import { getApiRaces } from '@/api'
 import { mapRacesFields } from '@/helpers'
+import { useRaceListStore } from '@/stores/racelist'
 
 const state = reactive({ races: [] })
 const { races } = toRefs(state)
 
 const update = (state) => {
+  const store = useRaceListStore()
   const fetchRaces = fetch(getApiRaces())
   fetchRaces
     .then((response) => {
@@ -155,7 +159,9 @@ const update = (state) => {
     })
     .then((data) => {
       // const races = state.races.push(...objects)
-      Object.assign(state, { races: mapRacesFields(data.records) })
+      const records = mapRacesFields(data.records)
+      Object.assign(state, { races: records })
+      store.add(records)
     })
     .catch((error) => {
       console.error(`could not get races: ${error}`)
@@ -170,3 +176,4 @@ function onClick(evt) {
 
 onMounted(fcnUpdate)
 </script>
+@/stores/racelist

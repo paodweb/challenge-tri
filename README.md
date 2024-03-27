@@ -45,25 +45,25 @@ npm run lint
 
 course :
 
-* Nom de la course :                title
-* Date de la course :               date
-* Niveau de la course :             level
-* Coefficient de la course :        coefficient
-* Format de la course :             format
-* Nombre de coureuses classées :    numberClassifiedWomenRunners
-* Nombre de coureurs classés :      numberClassifiedMenRunners
-* Temps de la première féminine :   timeFirstWoman
-* Temps du premier masculin :       timeFirstMan
-* Lien aux résultats :              link
-* Commentaire :                     comment
+* Nom de la course :                `title`
+* Date de la course :               `date`
+* Niveau de la course :             `level`
+* Coefficient de la course :        `coefficient`
+* Format de la course :             `format`
+* Nombre de coureuses classées :    `numberClassifiedWomenRunners`
+* Nombre de coureurs classés :      `numberClassifiedMenRunners`
+* Temps de la première féminine :   `timeFirstWoman`
+* Temps du premier masculin :       `timeFirstMan`
+* Lien aux résultats :              `link`
+* Commentaire :                     `comment`
 
 résultats :
 
-* Temps de la personne :                        time
-* Classement de la personne :                   ranking
-* Nombre de coureu.rs.ses dans la catégorie :   classifiedCategory
-* Classement dans la catégorie :                categoryRanking
-* Arbitre :                                     referee
-* Bonus photo, vidéo, etc. :                    bonus
-* Nombre de points acquis sur une course :      points
-* Licencié.e :                                  licensee
+* Temps de la personne :                        `time`
+* Classement de la personne :                   `ranking`
+* Nombre de coureu.rs.ses dans la catégorie :   `classifiedCategory`
+* Classement dans la catégorie :                `categoryRanking`
+* Arbitre :                                     `referee`
+* Bonus photo, vidéo, etc. :                    `bonus`
+* Nombre de points acquis sur une course :      `points`
+* Licencié.e :                                  `licensee`

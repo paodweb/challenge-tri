@@ -117,18 +117,24 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, toRefs } from 'vue'
+import { onMounted, reactive, toRaw, toRefs } from 'vue'
+import { storeToRefs } from 'pinia'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
 import { useRoute } from 'vue-router'
 import { getApiResults } from '@/api'
 import { mapResultFields } from '@/helpers'
+import { useRaceListStore } from '@/stores/racelist'
 
 const state = reactive({ title: 'no title', results: [] })
 const { title, results } = toRefs(state)
 
 const update = (state) => {
   const route = useRoute()
+  const store = useRaceListStore()
+  const { getRaceById } = storeToRefs(store)
+  // console.log(1, route.params.id)
+  // console.log(2, toRaw(store.getList))
   const fetchResults = fetch(getApiResults(route.params.id))
   fetchResults
     .then((response) => {
@@ -138,7 +144,12 @@ const update = (state) => {
       return response.json()
     })
     .then((data) => {
-      Object.assign(state, { title: route.params.title, results: mapResultFields(route.params.id, data.records) })
+      // const race = store.getRace(route.params.id)
+      const race = toRaw(getRaceById.value(route.params.id))
+      Object.assign(state, {
+        title: race.title,
+        results: mapResultFields(route.params.id, data.records)
+      })
     })
     .catch((error) => {
       console.error(`could not get results: ${error}`)
@@ -153,3 +164,4 @@ function onClick(evt) {
 
 onMounted(fcnUpdate)
 </script>
+@/stores/racelist

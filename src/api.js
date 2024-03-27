@@ -23,3 +23,15 @@ export const getApiResults = (race_id) => {
   ;[api_key, api_url, app_id] = getQuintadbApiKeys()
   return `${api_url}/apps/${app_id}/dtypes/entity/${entity_id}.json?rest_api_key=${api_key}`
 }
+
+// POST
+// Content-Type
+// application/json
+// https://8jgv385jg8.execute-api.eu-west-3.amazonaws.com/default/signature
+// {
+//   "jobName": "challenge-calculate",
+//   "jobQueue": "default",
+//   "jobDefinition": "hello-world",
+//   "race": {},
+//   "licensee": {}
+// }
