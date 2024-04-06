@@ -7,6 +7,8 @@ This application is used by administrators that fill points.
 
 This is a [Vue.js](https://vuejs.org/) project bootstrapped with [Create Vue](https://github.com/vuejs/create-vue).
 
+Data are stored in an online database [QuintaDB](https://quintadb.com/fr-api#forminfo).
+
 [See it live](https://paodweb.github.io/challenge-tri/).
 
 ## Recommended IDE Setup
