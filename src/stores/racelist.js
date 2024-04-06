@@ -2,7 +2,6 @@ import { computed, ref, toRaw } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useRaceListStore = defineStore('racelist', () => {
-
   // state
 
   // actions

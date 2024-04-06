@@ -52,3 +52,13 @@ a.vue-green,
   max-height: 760px;
   overflow-y: scroll;
 }
+
+form label.required::after,
+form legend.required::after {
+  content: ' *';
+  color: var(--color-red);
+}
+
+.error {
+  color: var(--color-red);
+}

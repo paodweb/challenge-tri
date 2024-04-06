@@ -8,16 +8,15 @@ const getQuintadbApiKeys = () => {
 const MAX_NUMBER_OF_ENTRIES_PER_PAGE = 200
 
 // fetchRacesPerPage
-// fetchRacesIn1Go
 
-export const getApiRaces = () => {
+export const fetchApiRacesIn1Go = () => {
   const entity_id = import.meta.env.VITE_QDB_RACE_ID
   let api_key, api_url, app_id
   ;[api_key, api_url, app_id] = getQuintadbApiKeys()
   return `${api_url}/apps/${app_id}/dtypes/entity/${entity_id}.json?rest_api_key=${api_key}`
 }
 
-export const getApiResults = (race_id) => {
+export const fetchApiResultsIn1Go = (race_id) => {
   const entity_id = import.meta.env.VITE_QDB_RESULT_ID
   let api_key, api_url, app_id
   ;[api_key, api_url, app_id] = getQuintadbApiKeys()

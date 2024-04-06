@@ -36,6 +36,11 @@ const router = createRouter({
       component: () => import('@/views/RacesView.vue')
     },
     {
+      path: '/create-race',
+      name: 'createrace',
+      component: () => import('@/views/RaceFormView.vue')
+    },
+    {
       path: '/race/:id',
       name: 'race',
       component: () => import('@/views/RaceResultsView.vue')

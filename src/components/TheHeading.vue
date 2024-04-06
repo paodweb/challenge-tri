@@ -19,21 +19,18 @@
         <ChevronLeftIcon class="h-5 w-5" aria-hidden="true" />
       </button>
       <button
-        type="button"
+        v-if="btnAction"
         class="mr-3 ml-3 inline-flex items-center rounded-full bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
-        @click="$emit('onClick', true)"
+        :type="btnType"
+        @click="$emit('on-click')"
       >
-        {{ buttonLabel }}
+        {{ btnLabel }}
       </button>
       <!--
-
-  <button type="button" class="rounded bg-indigo-50 px-2 py-1 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100">Button text</button>
-
-
-
-        <button type="button" class="rounded-md bg-pink-50 px-2.5 py-1.5 text-sm font-semibold text-pink-600 shadow-sm hover:bg-pink-100">
-            Ajouter une course
-        </button>
+      <button type="button" class="rounded bg-indigo-50 px-2 py-1 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100">Button text</button>
+      <button type="button" class="rounded-md bg-pink-50 px-2.5 py-1.5 text-sm font-semibold text-pink-600 shadow-sm hover:bg-pink-100">
+      Ajouter une course
+      </button>
       -->
     </div>
   </div>
@@ -51,6 +48,8 @@ const backNavigation = () => {
 
 defineProps({
   title: String,
-  buttonLabel: String
+  btnAction: String,
+  btnLabel: String,
+  btnType: String
 })
 </script>

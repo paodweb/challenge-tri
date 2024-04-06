@@ -2,7 +2,7 @@
   <TheHeading
     :title="`Résultats de course : ${title}`"
     buttonLabel="Ajouter un résultat"
-    @on-click="onClick($event)"
+    @on-click="console.log($event)"
   />
   <div class="objects-list">
     <div class="mt-8 flow-root overflow-hidden">
@@ -122,7 +122,7 @@ import { storeToRefs } from 'pinia'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
 import { useRoute } from 'vue-router'
-import { getApiResults } from '@/api'
+import { fetchApiResultsIn1Go } from '@/api'
 import { mapResultFields } from '@/helpers'
 import { useRaceListStore } from '@/stores/racelist'
 
@@ -135,7 +135,7 @@ const update = (state) => {
   const { getRaceById } = storeToRefs(store)
   // console.log(1, route.params.id)
   // console.log(2, toRaw(store.getList))
-  const fetchResults = fetch(getApiResults(route.params.id))
+  const fetchResults = fetch(fetchApiResultsIn1Go(route.params.id))
   fetchResults
     .then((response) => {
       if (!response.ok) {
@@ -155,12 +155,7 @@ const update = (state) => {
       console.error(`could not get results: ${error}`)
     })
 }
-
 const fcnUpdate = () => update(state)
-
-function onClick(evt) {
-  console.log(evt)
-}
 
 onMounted(fcnUpdate)
 </script>

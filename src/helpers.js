@@ -25,6 +25,37 @@ export const mapRacesFields = (records) => {
   return obj_list
 }
 
+// convert field ID into field name
+const mapRaceField = (key, value) => {
+  if (key == RACE_TITLE) {
+    return { title: value }
+  } else if (key == RACE_DATE) {
+    return { date: value }
+  } else if (key == RACE_LEVEL) {
+    return { level: mapLevel(value) }
+  } else if (key == RACE_COEFFICIENT) {
+    return { coefficient: mapCoefficient(value) }
+  } else if (key == RACE_FORMAT) {
+    return { format: value }
+  } else if (key == RACE_NUMBER_CLASSIFIED_WOMEN_RUNNERS) {
+    return { numberClassifiedWomenRunners: value }
+  } else if (key == RACE_NUMBER_CLASSIFIED_MEN_RUNNERS) {
+    return { numberClassifiedMenRunners: value }
+  } else if (key == RACE_TIME_FIRST_WOMAN) {
+    return { timeFirstWoman: value }
+  } else if (key == RACE_TIME_FIRST_MAN) {
+    return { timeFirstMan: value }
+  } else if (key == RACE_RESULTS_URL) {
+    return { link: value }
+  } else if (key == RACE_COMMENT) {
+    return { comment: value }
+  } else if (key == RACE_CHILDREN) {
+    return { children: value }
+  } else {
+    return {}
+  }
+}
+
 const mapCoefficient = (key) => {
   if (key == 'Triathlon • x3') {
     return '3.0'
@@ -56,37 +87,6 @@ const mapLevel = (key) => {
   } else {
     // France Métropolitaine • x1
     return '1.0'
-  }
-}
-
-// convert field ID into field name
-const mapRaceField = (key, value) => {
-  if (key == RACE_TITLE) {
-    return { title: value }
-  } else if (key == RACE_DATE) {
-    return { date: value }
-  } else if (key == RACE_LEVEL) {
-    return { level: mapLevel(value) }
-  } else if (key == RACE_COEFFICIENT) {
-    return { coefficient: mapCoefficient(value) }
-  } else if (key == RACE_FORMAT) {
-    return { format: value }
-  } else if (key == RACE_NUMBER_CLASSIFIED_WOMEN_RUNNERS) {
-    return { numberClassifiedWomenRunners: value }
-  } else if (key == RACE_NUMBER_CLASSIFIED_MEN_RUNNERS) {
-    return { numberClassifiedMenRunners: value }
-  } else if (key == RACE_TIME_FIRST_WOMAN) {
-    return { timeFirstWoman: value }
-  } else if (key == RACE_TIME_FIRST_MAN) {
-    return { timeFirstMan: value }
-  } else if (key == RACE_RESULTS_URL) {
-    return { link: value }
-  } else if (key == RACE_COMMENT) {
-    return { comment: value }
-  } else if (key == RACE_CHILDREN) {
-    return { children: value }
-  } else {
-    return {}
   }
 }
 

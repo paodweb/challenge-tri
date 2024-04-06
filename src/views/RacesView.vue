@@ -1,9 +1,6 @@
 <template>
-  <TheHeading
-    title="Liste des courses"
-    buttonLabel="Ajouter une course"
-    @on-click="onClick($event)"
-  />
+  <TheHeading title="Liste des courses" v-bind="btn_attrs" @on-click="router.push('create-race')">
+  </TheHeading>
   <div class="objects-list">
     <div class="mt-8 flow-root overflow-hidden">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -59,9 +56,7 @@
               <td class="relative py-4 pr-3 text-lg font-medium text-gray-800">
                 <div class="md:flex md:items-center">
                   <div class="min-w-0 flex">
-                    <router-link :to="`/race/${race.id}`"
-                      >{{ race.title }}&nbsp;</router-link
-                    >
+                    <router-link :to="`/race/${race.id}`">{{ race.title }}&nbsp;</router-link>
                   </div>
                   <div class="mt-4 flex md:ml-4 md:mt-0">
                     <p class="text-sm text-gray-500">{{ race.date }}</p>
@@ -137,19 +132,22 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, toRaw, toRefs } from 'vue'
+import { onMounted, reactive, toRefs } from 'vue'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
-import { getApiRaces } from '@/api'
+import { fetchApiRacesIn1Go } from '@/api'
 import { mapRacesFields } from '@/helpers'
 import { useRaceListStore } from '@/stores/racelist'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const state = reactive({ races: [] })
 const { races } = toRefs(state)
+const btn_attrs = { btnAction: true, btnLabel: 'Ajouter une course', btnType: 'button' }
 
 const update = (state) => {
   const store = useRaceListStore()
-  const fetchRaces = fetch(getApiRaces())
+  const fetchRaces = fetch(fetchApiRacesIn1Go())
   fetchRaces
     .then((response) => {
       if (!response.ok) {
@@ -167,12 +165,7 @@ const update = (state) => {
       console.error(`could not get races: ${error}`)
     })
 }
-
 const fcnUpdate = () => update(state)
-
-function onClick(evt) {
-  console.log(evt)
-}
 
 onMounted(fcnUpdate)
 </script>
