@@ -12,6 +12,15 @@ const RACE_RESULTS_URL = 'a9ESozWO5cPQZcNdddKvXH'
 const RACE_COMMENT = 'ddVSkDWO1kWPRdH0ZdKCov'
 const RACE_CHILDREN = 'bjWQLQWQfhWQ_dUSk6DSoE'
 
+const init_fields = ["title", "date", "level", "coefficient", "format", "numberClassifiedWomenRunners", "numberClassifiedMenRunners", "timeFirstWoman", "timeFirstMan", "link", "comment"]
+const crypted_fields = [RACE_TITLE, RACE_DATE, RACE_LEVEL, RACE_COEFFICIENT, RACE_FORMAT, RACE_NUMBER_CLASSIFIED_WOMEN_RUNNERS, RACE_NUMBER_CLASSIFIED_MEN_RUNNERS, RACE_TIME_FIRST_WOMAN, RACE_TIME_FIRST_MAN, RACE_RESULTS_URL, RACE_COMMENT]
+
+export const keyiedRaceFields = (data) => {
+    const mapped = {}
+    init_fields.forEach((element, index) => { mapped[ crypted_fields.at(index) ] = data[element] })
+    return mapped
+}
+
 export const mapRacesFields = (records) => {
   const obj_list = []
   for (let record of records) {
