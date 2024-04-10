@@ -1,6 +1,7 @@
 <template>
   <TheHeading
-    :title="`Résultats de course : ${title}`"
+    title="Résultats de course"
+    :subtitle="title"
     buttonLabel="Ajouter un résultat"
     @on-click="console.log($event)"
   />

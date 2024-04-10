@@ -1,5 +1,10 @@
 <template>
-  <TheHeading title="Liste des courses" v-bind="btn_attrs" @on-click="router.push('create-race')">
+  <TheHeading
+    title="Liste des courses"
+    :subtitle="`&nbsp;${records.length}`"
+    v-bind="btn_attrs"
+    @on-click="router.push('create-race')"
+  >
   </TheHeading>
   <div class="objects-list">
     <div class="mt-8 flow-root overflow-hidden">
@@ -111,7 +116,11 @@
               <td class="relative py-4 pl-3 text-right text-sm font-medium">
                 <div class="md:flex md:items-center md:justify-between">
                   <div class="min-w-0 flex">
-                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Modifier</a>
+                    <router-link
+                      :to="`/update-race/${race.id}`"
+                      class="text-indigo-600 hover:text-indigo-900"
+                      >Modifier</router-link
+                    >
                   </div>
                   <div class="mt-4 flex-1 md:ml-4 md:mt-0">
                     <router-link :to="`/race/${race.id}`">
@@ -132,7 +141,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, toRefs } from 'vue'
+import { onMounted, reactive, toRaw, toRefs } from 'vue'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
 import { fetchApiRacesIn1Go } from '@/api'
@@ -144,6 +153,7 @@ const router = useRouter()
 const state = reactive({ races: [] })
 const { races } = toRefs(state)
 const btn_attrs = { btnAction: true, btnLabel: 'Ajouter une course', btnType: 'button' }
+let records = []
 
 const update = (state) => {
   const store = useRaceListStore()
@@ -156,8 +166,7 @@ const update = (state) => {
       return response.json()
     })
     .then((data) => {
-      // const races = state.races.push(...objects)
-      const records = mapRacesFields(data.records)
+      records = mapRacesFields(data.records)
       Object.assign(state, { races: records })
       store.add(records)
     })
