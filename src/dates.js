@@ -1,3 +1,9 @@
+export function reverseDate(dateStr) {
+  // convert date in fr format dd-mm-yyyy to system format yyyy-mm-dd
+  // and vice versa
+  return dateStr.split('-').reverse().join('-')
+}
+
 export function isDateValid(dateStr) {
   // dateStr is on a system format: yyyy-mm-dd
   const date = new Date(dateStr)

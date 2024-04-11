@@ -7,7 +7,7 @@
       <h2
         class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight"
       >
-        {{ title }} <small class="subtitle">{{ subtitle }}</small>
+        {{ title }} <small class="subtitle">&nbsp;{{ subtitle }}</small>
       </h2>
     </div>
     <div class="mt-4 flex md:ml-4 md:mt-0">

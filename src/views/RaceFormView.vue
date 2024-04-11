@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="onSubmit" role="form">
-    <TheHeading :title="title" v-bind="btn_attrs"> </TheHeading>
+    <TheHeading :title="title" :subtitle="form.title" v-bind="btn_attrs"> </TheHeading>
     <div class="objects-list">
       <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
@@ -268,13 +268,17 @@
 
 <script setup>
 import { onMounted, ref, toRaw } from 'vue'
-import { isDateValid, isPositiveNumberValid, isTimeValid } from '@/dates'
-import { keyiedRaceFields } from '@/helpers'
-import { postApiRace } from '@/api'
-import TheHeading from '@/components/TheHeading.vue'
 import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { isDateValid, isPositiveNumberValid, isTimeValid, reverseDate } from '@/dates'
+import { postApiRace } from '@/api'
+import { keyiedRaceFields } from '@/helpers'
+import { useRaceListStore } from '@/stores/racelist'
+import TheHeading from '@/components/TheHeading.vue'
 
 const router = useRouter()
+const store = useRaceListStore()
+const { getRaceById } = storeToRefs(store)
 const btn_attrs = { btnAction: true, btnLabel: 'Enregistrer', btnType: 'submit' }
 const errors = ref([])
 const form = ref({
@@ -298,6 +302,9 @@ function onSubmit(evt) {
 
   if (isValid()) {
     // form is valid!
+    // specific case for date:
+    // convert date in system format yyyy-mm-dd to fr format dd-mm-yyyy
+    toRaw(form.value).date = reverseDate(toRaw(form.value).date)
     // store data in db
     postApiRace({ values: keyiedRaceFields(toRaw(form.value)) })
     // redirect to races path
@@ -346,11 +353,20 @@ function isValid() {
   return check_ti_da && check_number_men && check_number_women && check_times
 }
 
+function loadForm(race_id) {
+  const race = toRaw(getRaceById.value(race_id))
+  form.value = race
+  // specific case for date:
+  // convert date in fr format dd-mm-yyyy to system format yyyy-mm-dd
+  toRaw(form.value).date = reverseDate(toRaw(form.value).date)
+}
+
 onMounted(() => {
   if (router.currentRoute.value.name.includes('create')) {
     title.value = 'Créer une course'
   } else {
     title.value = 'Modifier la course'
+    loadForm(toRaw(router.currentRoute.value).params.id)
   }
 })
 </script>

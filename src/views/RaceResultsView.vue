@@ -119,10 +119,10 @@
 
 <script setup>
 import { onMounted, reactive, toRaw, toRefs } from 'vue'
+import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
-import { useRoute } from 'vue-router'
 import { fetchApiResultsIn1Go } from '@/api'
 import { mapResultFields } from '@/helpers'
 import { useRaceListStore } from '@/stores/racelist'
@@ -145,7 +145,6 @@ const update = (state) => {
       return response.json()
     })
     .then((data) => {
-      // const race = store.getRace(route.params.id)
       const race = toRaw(getRaceById.value(route.params.id))
       Object.assign(state, {
         title: race.title,

@@ -1,7 +1,7 @@
 <template>
   <TheHeading
     title="Liste des courses"
-    :subtitle="`&nbsp;${records.length}`"
+    :subtitle="records.length"
     v-bind="btn_attrs"
     @on-click="router.push('create-race')"
   >
@@ -141,7 +141,7 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, toRaw, toRefs } from 'vue'
+import { onMounted, reactive, toRefs } from 'vue'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
 import { fetchApiRacesIn1Go } from '@/api'
