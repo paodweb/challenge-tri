@@ -270,9 +270,8 @@
 import { onMounted, ref, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { isDateValid, isPositiveNumberValid, isTimeValid, reverseDate } from '@/dates'
-import { postApiRace } from '@/api'
-import { keyiedRaceFields } from '@/helpers'
+import { isDateValid, isPositiveStrictNumberValid, isTimeValid, reverseDate } from '@/dates'
+import { postApiRace, putApiRace } from '@/api'
 import { useRaceListStore } from '@/stores/racelist'
 import TheHeading from '@/components/TheHeading.vue'
 
@@ -295,6 +294,8 @@ const form = ref({
   title: ''
 })
 let title = ref('')
+let action = ref('')
+let id = ref('')
 
 function onSubmit(evt) {
   evt.preventDefault()
@@ -302,11 +303,14 @@ function onSubmit(evt) {
 
   if (isValid()) {
     // form is valid!
-    // specific case for date:
-    // convert date in system format yyyy-mm-dd to fr format dd-mm-yyyy
+    // specific case: date needs to be saved in fr format dd-mm-yyyy
     toRaw(form.value).date = reverseDate(toRaw(form.value).date)
     // store data in db
-    postApiRace({ values: keyiedRaceFields(toRaw(form.value)) })
+    if (action.value == 'create') {
+      postApiRace(toRaw(form.value))
+    } else {
+      putApiRace(id.value, toRaw(form.value))
+    }
     // redirect to races path
     router.push({ name: 'races' })
     return true
@@ -324,11 +328,11 @@ function onSubmit(evt) {
     }
   }
 
-  if (!isPositiveNumberValid(toRaw(form.value).numberClassifiedWomenRunners)) {
+  if (!isPositiveStrictNumberValid(toRaw(form.value).numberClassifiedWomenRunners)) {
     errors.value.push("Le nombre de coureuses classées n'est pas correct.")
   }
 
-  if (!isPositiveNumberValid(toRaw(form.value).numberClassifiedMenRunners)) {
+  if (!isPositiveStrictNumberValid(toRaw(form.value).numberClassifiedMenRunners)) {
     errors.value.push("Le nombre de coureurs classés n'est pas correct.")
   }
 
@@ -345,8 +349,8 @@ function onSubmit(evt) {
 function isValid() {
   const check_ti_da = toRaw(form.value).title && isDateValid(toRaw(form.value).date)
   // check numbers
-  const check_number_men = isPositiveNumberValid(toRaw(form.value).numberClassifiedMenRunners)
-  const check_number_women = isPositiveNumberValid(toRaw(form.value).numberClassifiedWomenRunners)
+  const check_number_men = isPositiveStrictNumberValid(toRaw(form.value).numberClassifiedMenRunners)
+  const check_number_women = isPositiveStrictNumberValid(toRaw(form.value).numberClassifiedWomenRunners)
   // check times
   const check_times =
     isTimeValid(toRaw(form.value).timeFirstMan) && isTimeValid(toRaw(form.value).timeFirstWoman)
@@ -356,16 +360,18 @@ function isValid() {
 function loadForm(race_id) {
   const race = toRaw(getRaceById.value(race_id))
   form.value = race
-  // specific case for date:
-  // convert date in fr format dd-mm-yyyy to system format yyyy-mm-dd
+  id.value = race.id
+  // specific case: date needs to be converted system format yyyy-mm-dd in the form
   toRaw(form.value).date = reverseDate(toRaw(form.value).date)
 }
 
 onMounted(() => {
   if (router.currentRoute.value.name.includes('create')) {
     title.value = 'Créer une course'
-  } else {
+    action.value = 'create'
+} else {
     title.value = 'Modifier la course'
+    action.value = 'update'
     loadForm(toRaw(router.currentRoute.value).params.id)
   }
 })

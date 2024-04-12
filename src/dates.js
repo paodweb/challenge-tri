@@ -45,8 +45,12 @@ function isMinuteOrSecondValid(value) {
   return isPositiveNumberValid(value) && value < 60
 }
 
-export function isPositiveNumberValid(value) {
+export function isPositiveStrictNumberValid(value) {
   return isNumberValid(value) && value > 0
+}
+
+function isPositiveNumberValid(value) {
+  return isNumberValid(value) && value >= 0
 }
 
 function isNumberValid(value) {

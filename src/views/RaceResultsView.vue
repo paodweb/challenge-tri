@@ -136,7 +136,7 @@ const update = (state) => {
   const { getRaceById } = storeToRefs(store)
   // console.log(1, route.params.id)
   // console.log(2, toRaw(store.getList))
-  const fetchResults = fetch(fetchApiResultsIn1Go(route.params.id))
+  const fetchResults = fetch(fetchApiResultsIn1Go())
   fetchResults
     .then((response) => {
       if (!response.ok) {
