@@ -77,14 +77,8 @@
                   v-model="form.level"
                   class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:max-w-md sm:text-sm sm:leading-6"
                   required
-                >
-                  <option value="1.5">Championnat de Bretagne • x1.5</option>
-                  <option value="1.5">Championnat de France sans qualification • x1.5</option>
-                  <option value="2.0">Championnat de France sur sélection • x2</option>
-                  <option value="3.0">Championnat international sur sélection • x3</option>
-                  <option value="1.0" selected>France Métropolitaine • x1</option>
-                  <option value="1.5">Hors France métropolitaine • x1.5</option>
-                  <option value="5.0">International Élite (CE, JO, Hawaï Pro) • x5</option>
+                  >
+                  <option v-for="option in levelOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                 </select>
               </div>
             </div>
@@ -101,18 +95,14 @@
                   v-model="form.coefficient"
                   class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:max-w-md sm:text-sm sm:leading-6"
                   required
-                >
-                  <option value="3.0">Triathlon • x3</option>
-                  <option value="3.0">Duathlon • x3</option>
-                  <option value="1.5">Aquathlon • x1.5</option>
-                  <option value="1.5">Swim&Run / Run&Bike • x1.5</option>
-                  <option value="1.0" selected>Autres • x1</option>
+                  >
+                  <option v-for="option in coefficientOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
                 </select>
               </div>
             </div>
 
             <!-- visible if Triathlon • x3 -->
-            <div v-if="parseFloat(form.coefficient) == 3.0" class="sm:col-span-6">
+            <div v-if="['code-coefficient-a', 'code-coefficient-b'].includes(form.coefficient)" class="sm:col-span-6">
               <label
                 for="form.format"
                 class="block text-sm font-medium leading-6 text-gray-900 required"
@@ -272,6 +262,7 @@ import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { isDateValid, isPositiveStrictNumberValid, isTimeValid, reverseDate } from '@/dates'
 import { postApiRace, putApiRace } from '@/api'
+import { getSelectOptions } from '@/helpers'
 import { useRaceListStore } from '@/stores/racelist'
 import TheHeading from '@/components/TheHeading.vue'
 
@@ -296,6 +287,8 @@ const form = ref({
 let title = ref('')
 let action = ref('')
 let id = ref('')
+let levelOptions = ref([])
+let coefficientOptions = ref([])
 
 function onSubmit(evt) {
   evt.preventDefault()
@@ -368,6 +361,9 @@ function loadForm(race_id) {
 }
 
 onMounted(() => {
+  levelOptions = getSelectOptions()
+  coefficientOptions = getSelectOptions('coefficient')
+
   if (router.currentRoute.value.name.includes('create')) {
     title.value = 'Créer une course'
     action.value = 'create'

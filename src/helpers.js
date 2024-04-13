@@ -1,3 +1,38 @@
+// levels
+const levelCollection = {
+  'code-level-a': {'factor': 1.5, 'label': "Championnat de Bretagne • x1.5"},
+  'code-level-b': {'factor': 1.5, 'label': "Championnat de France sans qualification • x1.5"},
+  'code-level-c': {'factor': 2.0, 'label': "Championnat de France sur sélection • x2"},
+  'code-level-d': {'factor': 3.0, 'label': "Championnat international sur sélection • x3"},
+  'code-level-e': {'factor': 1.0, 'label': "France Métropolitaine • x1"},
+  'code-level-f': {'factor': 1.5, 'label': "Hors France métropolitaine • x1.5"},
+  'code-level-g': {'factor': 5.0, 'label': "International Élite (CE, JO, Hawaï Pro) • x5"},
+}
+
+// coefficients
+const coefficientCollection = {
+  'code-coefficient-a': {'factor': 3.0, 'label': "Triathlon • x3"},
+  'code-coefficient-b': {'factor': 3.0, 'label': "Duathlon • x3"},
+  'code-coefficient-c': {'factor': 1.5, 'label': "Aquathlon • x1.5"},
+  'code-coefficient-d': {'factor': 1.5, 'label': "Swim&Run / Run&Bike • x1.5"},
+  'code-coefficient-e': {'factor': 1.0, 'label': "Autres • x1"},
+}
+
+export const getSelectOptions = (collection) => {
+  let dataCollection = {}
+  if (collection == 'coefficient') {
+    dataCollection = coefficientCollection
+  } else {
+    dataCollection = levelCollection
+  }
+  // render list of objects...
+  const list = []
+  for (const [key, value] of Object.entries(dataCollection)) {
+    list.push({'value': key, 'label': value.label})
+  }
+  return list
+}
+
 // races fields
 const RACE_TITLE = 'cxW7LMWPzbBikNW4JcK8kA'
 const RACE_DATE = 'dcVCkwl8jeB4ktW6NdGmoS'
@@ -67,9 +102,9 @@ const mapRaceField = (key, value) => {
   } else if (key == RACE_DATE) {
     return { date: value }
   } else if (key == RACE_LEVEL) {
-    return { level: mapLevel(value) }
+    return { level: mapCollection(value) }
   } else if (key == RACE_COEFFICIENT) {
-    return { coefficient: mapCoefficient(value) }
+    return { coefficient: mapCollection(value, 'coefficient') }
   } else if (key == RACE_FORMAT) {
     return { format: value }
   } else if (key == RACE_NUMBER_CLASSIFIED_WOMEN_RUNNERS) {
@@ -91,38 +126,20 @@ const mapRaceField = (key, value) => {
   }
 }
 
-const mapCoefficient = (key) => {
-  if (key == 'Triathlon • x3') {
-    return '3.0'
-  } else if (key == 'Duathlon • x3') {
-    return '3.0'
-  } else if (key == 'Swim&Run / Run&Bike • x1.5') {
-    return '1.5'
-  } else if (key == 'Aquathlon • x1.5') {
-    return '1.5'
+const mapCollection = (code, collection) => {
+  let dataCollection = {}
+  if (collection == 'coefficient') {
+    dataCollection = coefficientCollection
   } else {
-    // Autres • x1
-    return '1.0'
+    dataCollection = levelCollection
   }
-}
 
-const mapLevel = (key) => {
-  if (key == 'Championnat de Bretagne • x1.5') {
-    return '1.5'
-  } else if (key == 'Championnat de France sans qualification • x1.5') {
-    return '1.5'
-  } else if (key == 'Championnat de France sur sélection • x2') {
-    return '2.0'
-  } else if (key == 'Championnat international sur sélection • x3') {
-    return '3.0'
-  } else if (key == 'Hors France métropolitaine • x1.5') {
-    return '1.5'
-  } else if (key == 'International Elite (CE, JO, Hawaï Pro) • x5') {
-    return '5.0'
-  } else {
-    // France Métropolitaine • x1
-    return '1.0'
+  for (const [key, value] of Object.entries(dataCollection)) {
+    if (key == code) {
+      return value.factor.toString()
+    }
   }
+  return '1.0'  // @TODO improve returning featured element
 }
 
 // results fields
