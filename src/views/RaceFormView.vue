@@ -350,7 +350,9 @@ function isValid() {
   const check_ti_da = toRaw(form.value).title && isDateValid(toRaw(form.value).date)
   // check numbers
   const check_number_men = isPositiveStrictNumberValid(toRaw(form.value).numberClassifiedMenRunners)
-  const check_number_women = isPositiveStrictNumberValid(toRaw(form.value).numberClassifiedWomenRunners)
+  const check_number_women = isPositiveStrictNumberValid(
+    toRaw(form.value).numberClassifiedWomenRunners
+  )
   // check times
   const check_times =
     isTimeValid(toRaw(form.value).timeFirstMan) && isTimeValid(toRaw(form.value).timeFirstWoman)
@@ -369,7 +371,7 @@ onMounted(() => {
   if (router.currentRoute.value.name.includes('create')) {
     title.value = 'Créer une course'
     action.value = 'create'
-} else {
+  } else {
     title.value = 'Modifier la course'
     action.value = 'update'
     loadForm(toRaw(router.currentRoute.value).params.id)

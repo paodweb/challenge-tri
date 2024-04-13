@@ -4,35 +4,43 @@ import { keyiedRaceFields } from '@/helpers'
 const MAX_ENTRIES_PER_PAGE = 200
 
 export const fetchApiRacesIn1Go = () => {
-  const rq = new RequestApiRace()
+  const rq = new CreateListApiRace()
   return rq.get()
 }
 
 export const fetchApiResultsIn1Go = () => {
-  const rq = new RequestApiResult()
+  const rq = new CreateListApiResult()
   return rq.get()
 }
 
 export function postApiRace(data) {
-  const rq = new PostRequestApi()
+  const rq = new CreateListApiRace()
   rq.post(data)
 }
 
 export function putApiRace(id, data) {
-  const rq = new PutRequestApi()
+  const rq = new UpdateApiRace()
+  rq.put(id, data)
+}
+
+export function postApiResult(data) {
+  const rq = new CreateListApiResult()
+  rq.post(data)
+}
+
+export function putApiResult(id, data) {
+  const rq = new UpdateApiResult()
   rq.put(id, data)
 }
 
 class BaseRequestApi {
+
   constructor() {
     this.api_key = import.meta.env.VITE_QDB_API_KEY
     this.api_url = import.meta.env.VITE_QDB_API_URL
     this.app_id = import.meta.env.VITE_QDB_APP_ID
     this.entity_id = '--to-be-implemented--'
-    this.per_page = MAX_ENTRIES_PER_PAGE  // maximum number of entries per page
-  }
-  get() {
-    return `${this.api_url}/apps/${this.app_id}/dtypes/entity/${this.entity_id}.json?rest_api_key=${this.api_key}&per_page=${this.per_page}`
+    this.per_page = MAX_ENTRIES_PER_PAGE // maximum number of entries per page
   }
   getBody() {
     return { rest_api_key: this.api_key, entity_id: this.entity_id }
@@ -56,46 +64,55 @@ class BaseRequestApi {
   }
 }
 
-class RequestApiRace extends BaseRequestApi {
-  constructor() {
-    super()
-    this.entity_id = import.meta.env.VITE_QDB_RACE_ID
-  }
-}
-
-class RequestApiResult extends BaseRequestApi {
-  constructor() {
-    super()
-    this.entity_id = import.meta.env.VITE_QDB_RESULT_ID
-  }
-}
-
-class PostRequestApi extends RequestApiRace {
-  getUrl() {
-    return `${this.api_url}/apps/${this.app_id}/dtypes.json`
-  }
+class CreateListRequestApi extends BaseRequestApi {
+  
   getBody(data) {
     const body = super.getBody()
     return { ...body, id: uuidv4(), values: super.getValues(data) }
   }
+  get() {
+    return `${this.api_url}/apps/${this.app_id}/dtypes/entity/${this.entity_id}.json?rest_api_key=${this.api_key}&per_page=${this.per_page}`
+  }
   post(data) {
-    const url = this.getUrl()
+    const url = `${this.api_url}/apps/${this.app_id}/dtypes.json`
     const body = this.getBody(data)
     super.request(url, body, 'POST')
   }
 }
 
-class PutRequestApi extends RequestApiRace {
-  getUrl(id) {
-    return `${this.api_url}/apps/${this.app_id}/dtypes/${id}.json`
-  }
+class UpdateRequestApi extends BaseRequestApi {
+
   getBody(data) {
     const body = super.getBody()
     return { ...body, values: super.getValues(data) }
   }
   put(id, data) {
-    const url = this.getUrl(id)
+    const url = `${this.api_url}/apps/${this.app_id}/dtypes/${id}.json`
     const body = this.getBody(data)
     super.request(url, body, 'PUT')
   }
 }
+
+let BaseApiRaceMixin = (Base) =>
+  class extends Base {
+    constructor() {
+      super()
+      this.entity_id = import.meta.env.VITE_QDB_RACE_ID
+    }
+  }
+
+let BaseApiResultMixin = (Base) =>
+  class extends Base {
+    constructor() {
+      super()
+      this.entity_id = import.meta.env.VITE_QDB_RESULT_ID
+    }
+  }
+
+class CreateListApiRace extends BaseApiRaceMixin(CreateListRequestApi) {}
+
+class UpdateApiRace extends BaseApiRaceMixin(UpdateRequestApi) {}
+
+class CreateListApiResult extends BaseApiResultMixin(CreateListRequestApi) {}
+
+class UpdateApiResult extends BaseApiResultMixin(UpdateRequestApi) {}
