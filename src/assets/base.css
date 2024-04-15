@@ -20,8 +20,10 @@
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 
-  --color-red: hsla(330, 67%, 52%, 1);
+  --color-pink: hsla(330, 67%, 52%, 1);
   --color-green: hsla(160, 100%, 37%, 1) !important;
+  --color-pink-dark: hsla(330, 100%, 37%, 0.2) !important;
+  --color-pink-dark-2: hsla(330, 67%, 52%, 0.2);
 }
 
 /* semantic color variables for this project */

@@ -1,8 +1,8 @@
 <template>
   <nav>
-    <RouterLink to="/" class="vue-green">Home</RouterLink>
-    <RouterLink to="/about" class="vue-green">About</RouterLink>
-    <RouterLink to="/races" class="vue-green">Liste des courses</RouterLink>
+    <RouterLink to="/" class="vue-pink">Accueil</RouterLink>
+    <RouterLink to="/results" class="vue-pink">Consulter les résultats</RouterLink>
+    <RouterLink to="/races" class="vue-pink">Enregistrer une course</RouterLink>
   </nav>
 </template>
 

@@ -9,28 +9,32 @@
 }
 
 a,
-.green {
+.green,
+.pink {
   text-decoration: none;
-  color: var(--color-red);
+  color: var(--color-pink);
   transition: 0.4s;
   padding: 3px;
 }
 
 @media (hover: hover) {
   a:hover {
-    background-color: hsla(330, 67%, 52%, 0.2);
+    background-color: var(--color-pink-dark-2);
   }
 }
 
 a.vue-green,
-.green {
+a.vue-pink,
+.green,
+.pink {
   text-decoration: none;
-  color: var(--color-green);
+  color: var(--color-pink);
 }
 
 @media (hover: hover) {
-  a.vue-green:hover {
-    background-color: hsla(160, 100%, 37%, 0.2) !important;
+  a.vue-green:hover,
+  a.vue-pink:hover {
+    background-color: var(--color-pink-dark-2);
   }
 }
 
@@ -56,13 +60,19 @@ a.vue-green,
 form label.required::after,
 form legend.required::after {
   content: ' *';
-  color: var(--color-red);
+  color: var(--color-pink);
 }
 
 .error {
-  color: var(--color-red);
+  color: var(--color-pink);
 }
 
 .subtitle {
   color: var(--vt-c-divider-dark-1);
+}
+h1.heading {
+  font-size: 2.5rem;
+}
+svg {
+  display: inline-block !important;
 }

@@ -34,7 +34,6 @@ export function putApiResult(id, data) {
 }
 
 class BaseRequestApi {
-
   constructor() {
     this.api_key = import.meta.env.VITE_QDB_API_KEY
     this.api_url = import.meta.env.VITE_QDB_API_URL
@@ -65,7 +64,6 @@ class BaseRequestApi {
 }
 
 class CreateListRequestApi extends BaseRequestApi {
-  
   getBody(data) {
     const body = super.getBody()
     return { ...body, id: uuidv4(), values: super.getValues(data) }
@@ -81,7 +79,6 @@ class CreateListRequestApi extends BaseRequestApi {
 }
 
 class UpdateRequestApi extends BaseRequestApi {
-
   getBody(data) {
     const body = super.getBody()
     return { ...body, values: super.getValues(data) }

@@ -1,21 +1,21 @@
 // levels
 const levelCollection = {
-  'code-level-a': {'factor': 1.5, 'label': "Championnat de Bretagne • x1.5"},
-  'code-level-b': {'factor': 1.5, 'label': "Championnat de France sans qualification • x1.5"},
-  'code-level-c': {'factor': 2.0, 'label': "Championnat de France sur sélection • x2"},
-  'code-level-d': {'factor': 3.0, 'label': "Championnat international sur sélection • x3"},
-  'code-level-e': {'factor': 1.0, 'label': "France Métropolitaine • x1"},
-  'code-level-f': {'factor': 1.5, 'label': "Hors France métropolitaine • x1.5"},
-  'code-level-g': {'factor': 5.0, 'label': "International Élite (CE, JO, Hawaï Pro) • x5"},
+  'code-level-a': { factor: 1.5, label: 'Championnat de Bretagne • x1.5' },
+  'code-level-b': { factor: 1.5, label: 'Championnat de France sans qualification • x1.5' },
+  'code-level-c': { factor: 2.0, label: 'Championnat de France sur sélection • x2' },
+  'code-level-d': { factor: 3.0, label: 'Championnat international sur sélection • x3' },
+  'code-level-e': { factor: 1.0, label: 'France Métropolitaine • x1' },
+  'code-level-f': { factor: 1.5, label: 'Hors France métropolitaine • x1.5' },
+  'code-level-g': { factor: 5.0, label: 'International Élite (CE, JO, Hawaï Pro) • x5' }
 }
 
 // coefficients
 const coefficientCollection = {
-  'code-coefficient-a': {'factor': 3.0, 'label': "Triathlon • x3"},
-  'code-coefficient-b': {'factor': 3.0, 'label': "Duathlon • x3"},
-  'code-coefficient-c': {'factor': 1.5, 'label': "Aquathlon • x1.5"},
-  'code-coefficient-d': {'factor': 1.5, 'label': "Swim&Run / Run&Bike • x1.5"},
-  'code-coefficient-e': {'factor': 1.0, 'label': "Autres • x1"},
+  'code-coefficient-a': { factor: 3.0, label: 'Triathlon • x3' },
+  'code-coefficient-b': { factor: 3.0, label: 'Duathlon • x3' },
+  'code-coefficient-c': { factor: 1.5, label: 'Aquathlon • x1.5' },
+  'code-coefficient-d': { factor: 1.5, label: 'Swim&Run / Run&Bike • x1.5' },
+  'code-coefficient-e': { factor: 1.0, label: 'Autres • x1' }
 }
 
 export const getSelectOptions = (collection) => {
@@ -28,7 +28,7 @@ export const getSelectOptions = (collection) => {
   // render list of objects...
   const list = []
   for (const [key, value] of Object.entries(dataCollection)) {
-    list.push({'value': key, 'label': value.label})
+    list.push({ value: key, label: value.label })
   }
   return list
 }
@@ -139,7 +139,7 @@ const mapCollection = (code, collection) => {
       return value.factor.toString()
     }
   }
-  return '1.0'  // @TODO improve returning featured element
+  return '1.0' // @TODO improve returning featured element
 }
 
 // results fields
