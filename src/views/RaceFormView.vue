@@ -137,7 +137,7 @@
 
             <div class="sm:col-span-6">
               <label
-                for="form.numberClassifiedMenRunners"
+                for="form.numberClassifiedMen"
                 class="block text-sm font-medium leading-6 text-gray-900 required"
                 >Nombre de coureurs classés</label
               >
@@ -146,8 +146,8 @@
                   class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-pink-600 sm:max-w-md"
                 >
                   <input
-                    v-model="form.numberClassifiedMenRunners"
-                    id="form.numberClassifiedMenRunners"
+                    v-model="form.numberClassifiedMen"
+                    id="form.numberClassifiedMen"
                     class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     min="0"
                     placeholder="123"
@@ -160,7 +160,7 @@
 
             <div class="sm:col-span-6">
               <label
-                for="form.numberClassifiedWomenRunners"
+                for="form.numberClassifiedWomen"
                 class="block text-sm font-medium leading-6 text-gray-900 required"
                 >Nombre de coureuses classées</label
               >
@@ -169,8 +169,8 @@
                   class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-pink-600 sm:max-w-md"
                 >
                   <input
-                    v-model="form.numberClassifiedWomenRunners"
-                    id="form.numberClassifiedWomenRunners"
+                    v-model="form.numberClassifiedWomen"
+                    id="form.numberClassifiedWomen"
                     class="block flex-1 border-0 bg-transparent py-1.5 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                     min="0"
                     placeholder="123"
@@ -271,8 +271,8 @@
 import { onMounted, ref, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { isDateValid, isPositiveStrictNumberValid, isTimeValid, reverseDate } from '@/dates'
-import { postApiRace, putApiRace } from '@/api'
+import { isDateValid, isPositiveStrictNumberValid, isTimeValid } from '@/dates'
+import { requestPatchApiRace, requestPostApiRace } from '@/api'
 import { getSelectOptions } from '@/helpers'
 import { useRaceListStore } from '@/stores/racelist'
 import TheHeading from '@/components/TheHeading.vue'
@@ -289,8 +289,8 @@ const form = ref({
   format: '',
   level: '',
   link: '',
-  numberClassifiedMenRunners: 0,
-  numberClassifiedWomenRunners: 0,
+  numberClassifiedMen: 0,
+  numberClassifiedWomen: 0,
   timeFirstMan: '',
   timeFirstWoman: '',
   title: ''
@@ -307,16 +307,41 @@ function onSubmit(evt) {
 
   if (isValid()) {
     // form is valid!
-    // specific case: date needs to be saved in fr format dd-mm-yyyy
-    toRaw(form.value).date = reverseDate(toRaw(form.value).date)
     // store data in db
     if (action.value == 'create') {
-      postApiRace(toRaw(form.value))
+      const promise = fetch(requestPostApiRace(toRaw(form.value)))
+      promise
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`)
+          }
+          return response.json()
+        })
+        .then(() => {
+          // redirect to races path
+          router.push({ name: 'races' })
+        })
+        .catch((error) => {
+          console.error(`could not create race: ${error}`)
+        })
     } else {
-      putApiRace(id.value, toRaw(form.value))
+      // update
+      const promise = fetch(requestPatchApiRace(id.value, toRaw(form.value)))
+      promise
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`)
+          }
+          return response.json()
+        })
+        .then(() => {
+          // redirect to races path
+          router.push({ name: 'races' })
+        })
+        .catch((error) => {
+          console.error(`could not update race: ${error}`)
+        })
     }
-    // redirect to races path
-    router.push({ name: 'races' })
     return true
   }
 
@@ -332,11 +357,11 @@ function onSubmit(evt) {
     }
   }
 
-  if (!isPositiveStrictNumberValid(toRaw(form.value).numberClassifiedWomenRunners)) {
+  if (!isPositiveStrictNumberValid(toRaw(form.value).numberClassifiedWomen)) {
     errors.value.push("Le nombre de coureuses classées n'est pas correct.")
   }
 
-  if (!isPositiveStrictNumberValid(toRaw(form.value).numberClassifiedMenRunners)) {
+  if (!isPositiveStrictNumberValid(toRaw(form.value).numberClassifiedMen)) {
     errors.value.push("Le nombre de coureurs classés n'est pas correct.")
   }
 
@@ -353,10 +378,8 @@ function onSubmit(evt) {
 function isValid() {
   const check_ti_da = toRaw(form.value).title && isDateValid(toRaw(form.value).date)
   // check numbers
-  const check_number_men = isPositiveStrictNumberValid(toRaw(form.value).numberClassifiedMenRunners)
-  const check_number_women = isPositiveStrictNumberValid(
-    toRaw(form.value).numberClassifiedWomenRunners
-  )
+  const check_number_men = isPositiveStrictNumberValid(toRaw(form.value).numberClassifiedMen)
+  const check_number_women = isPositiveStrictNumberValid(toRaw(form.value).numberClassifiedWomen)
   // check times
   const check_times =
     isTimeValid(toRaw(form.value).timeFirstMan) && isTimeValid(toRaw(form.value).timeFirstWoman)
@@ -367,8 +390,6 @@ function loadForm(race_id) {
   const race = toRaw(getRaceById.value(race_id))
   form.value = race
   id.value = race.id
-  // specific case: date needs to be converted system format yyyy-mm-dd in the form
-  toRaw(form.value).date = reverseDate(toRaw(form.value).date)
 }
 
 onMounted(() => {

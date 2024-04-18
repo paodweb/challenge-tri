@@ -120,24 +120,18 @@
 <script setup>
 import { onMounted, reactive, toRaw, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
-import { storeToRefs } from 'pinia'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
-import { fetchApiResultsIn1Go } from '@/api'
+import { requestGetApiResult } from '@/api'
 import { mapResultFields } from '@/helpers'
-import { useRaceListStore } from '@/stores/racelist'
 
 const state = reactive({ title: 'no title', results: [] })
 const { title, results } = toRefs(state)
 
 const update = (state) => {
   const route = useRoute()
-  const store = useRaceListStore()
-  const { getRaceById } = storeToRefs(store)
-  // console.log(1, route.params.id)
-  // console.log(2, toRaw(store.getList))
-  const fetchResults = fetch(fetchApiResultsIn1Go())
-  fetchResults
+  const promise = fetch(requestGetApiResult(route.params.id))
+  promise
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`)
@@ -145,10 +139,13 @@ const update = (state) => {
       return response.json()
     })
     .then((data) => {
-      const race = toRaw(getRaceById.value(route.params.id))
+      let title_str = 'no title'
+      if (data.results.length > 0) {
+        title_str = data.results[0].field_2041403[0].value
+      }
       Object.assign(state, {
-        title: race.title,
-        results: mapResultFields(route.params.id, data.records)
+        title: title_str,
+        results: mapResultFields(data.results)
       })
     })
     .catch((error) => {

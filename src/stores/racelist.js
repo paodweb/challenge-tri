@@ -11,7 +11,7 @@ export const useRaceListStore = defineStore('racelist', () => {
   const races = ref([])
   const getList = computed(() => races.value)
   const getRaceById = computed(() => {
-    return (raceId) => races.value.find((race) => race.id === raceId)
+    return (raceId) => races.value.find((race) => toRaw(race).id === parseInt(raceId))
   })
 
   function getRace(raceId) {

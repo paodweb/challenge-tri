@@ -2,7 +2,7 @@
   <nav>
     <RouterLink to="/" class="vue-pink">Accueil</RouterLink>
     <RouterLink to="/results" class="vue-pink">Consulter les résultats</RouterLink>
-    <RouterLink to="/races" class="vue-pink">Enregistrer une course</RouterLink>
+    <RouterLink to="/races" class="vue-pink">Enregistrer un résultat</RouterLink>
   </nav>
 </template>
 

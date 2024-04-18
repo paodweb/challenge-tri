@@ -34,18 +34,18 @@ export const getSelectOptions = (collection) => {
 }
 
 // races fields
-const RACE_TITLE = 'field_2033316'
-const RACE_DATE = 'field_2033317'
-const RACE_LEVEL = 'field_2033318'
-const RACE_COEFFICIENT = 'field_2033323'
-const RACE_FORMAT = 'field_2033325'
-const RACE_NUMBER_CLASSIFIED_WOMEN = 'field_2033326'
-const RACE_NUMBER_CLASSIFIED_MEN = 'field_2033327'
-const RACE_TIME_FIRST_WOMAN = 'field_2033328'
-const RACE_TIME_FIRST_MAN = 'field_2033329'
-const RACE_RESULTS_URL = 'field_2033330'
-const RACE_COMMENT = 'field_2033332'
-const RACE_CHILDREN = 'field_2041497'
+const RACE_TITLE = 'cxW7LMWPzbBikNW4JcK8kA'
+const RACE_DATE = 'dcVCkwl8jeB4ktW6NdGmoS'
+const RACE_LEVEL = 'aWW47cJ8nbalWEW5_dU8kE'
+const RACE_COEFFICIENT = 'dcQK8cWQjcSzvOWOarW7yn'
+const RACE_FORMAT = 'ddL8o5DCnkW4eAsa7cOgrR'
+const RACE_NUMBER_CLASSIFIED_WOMEN_RUNNERS = 'b1W6VdH8nnhQC2WQBdNJKN'
+const RACE_NUMBER_CLASSIFIED_MEN_RUNNERS = 'aYc8oMW4HokiklW4ZcHezb'
+const RACE_TIME_FIRST_WOMAN = 'blhahdSCjeW49ub2alybuH'
+const RACE_TIME_FIRST_MAN = 'aOW4y2jgPcVyortmkYsJrl'
+const RACE_RESULTS_URL = 'a9ESozWO5cPQZcNdddKvXH'
+const RACE_COMMENT = 'ddVSkDWO1kWPRdH0ZdKCov'
+const RACE_CHILDREN = 'bjWQLQWQfhWQ_dUSk6DSoE'
 
 const init_fields = [
   'title',
@@ -53,8 +53,8 @@ const init_fields = [
   'level',
   'coefficient',
   'format',
-  'numberClassifiedWomen',
-  'numberClassifiedMen',
+  'numberClassifiedWomenRunners',
+  'numberClassifiedMenRunners',
   'timeFirstWoman',
   'timeFirstMan',
   'link',
@@ -66,8 +66,8 @@ const crypted_fields = [
   RACE_LEVEL,
   RACE_COEFFICIENT,
   RACE_FORMAT,
-  RACE_NUMBER_CLASSIFIED_WOMEN,
-  RACE_NUMBER_CLASSIFIED_MEN,
+  RACE_NUMBER_CLASSIFIED_WOMEN_RUNNERS,
+  RACE_NUMBER_CLASSIFIED_MEN_RUNNERS,
   RACE_TIME_FIRST_WOMAN,
   RACE_TIME_FIRST_MAN,
   RACE_RESULTS_URL,
@@ -84,50 +84,49 @@ export const keyiedRaceFields = (data) => {
 
 export const mapRacesFields = (records) => {
   const obj_list = []
-  for (const record of records) {
-    const obj = { id: record.id }
-    for (const [key, value_or_array] of Object.entries(record)) {
+  for (let record of records) {
+    let obj = { id: record.id }
+    for (const [key, value] of Object.entries(record.values)) {
       // convert field ID into field name
-      Object.assign(obj, mapRaceField(key, value_or_array))
+      Object.assign(obj, mapRaceField(key, value))
     }
     obj_list.push(obj)
   }
   return obj_list
 }
 
-// convert field ID into field name, mixed can be value or array
-const mapRaceField = (key, mixed) => {
+// convert field ID into field name
+const mapRaceField = (key, value) => {
   if (key == RACE_TITLE) {
-    return { title: mixed }
+    return { title: value }
   } else if (key == RACE_DATE) {
-    return { date: mixed }
+    return { date: value }
   } else if (key == RACE_LEVEL) {
-    return { level: mixed }
+    return { level: mapCollection(value) }
   } else if (key == RACE_COEFFICIENT) {
-    return { coefficient: mixed }
+    return { coefficient: mapCollection(value, 'coefficient') }
   } else if (key == RACE_FORMAT) {
-    return { format: mixed }
-  } else if (key == RACE_NUMBER_CLASSIFIED_WOMEN) {
-    return { numberClassifiedWomen: mixed }
-  } else if (key == RACE_NUMBER_CLASSIFIED_MEN) {
-    return { numberClassifiedMen: mixed }
+    return { format: value }
+  } else if (key == RACE_NUMBER_CLASSIFIED_WOMEN_RUNNERS) {
+    return { numberClassifiedWomenRunners: value }
+  } else if (key == RACE_NUMBER_CLASSIFIED_MEN_RUNNERS) {
+    return { numberClassifiedMenRunners: value }
   } else if (key == RACE_TIME_FIRST_WOMAN) {
-    return { timeFirstWoman: mixed }
+    return { timeFirstWoman: value }
   } else if (key == RACE_TIME_FIRST_MAN) {
-    return { timeFirstMan: mixed }
+    return { timeFirstMan: value }
   } else if (key == RACE_RESULTS_URL) {
-    return { link: mixed }
+    return { link: value }
   } else if (key == RACE_COMMENT) {
-    return { comment: mixed }
+    return { comment: value }
   } else if (key == RACE_CHILDREN) {
-    // array here
-    return { children: mixed.length }
+    return { children: value }
   } else {
     return {}
   }
 }
 
-export const mapCollection = (object_key, collection) => {
+const mapCollection = (code, collection) => {
   let dataCollection = {}
   if (collection == 'coefficient') {
     dataCollection = coefficientCollection
@@ -136,7 +135,7 @@ export const mapCollection = (object_key, collection) => {
   }
 
   for (const [key, value] of Object.entries(dataCollection)) {
-    if (key == object_key) {
+    if (key == code) {
       return value.factor.toString()
     }
   }
@@ -144,25 +143,28 @@ export const mapCollection = (object_key, collection) => {
 }
 
 // results fields
-const RESULT_LICENSEE = 'field_2039120'
-const RESULT_TIME = 'field_2039121'
-const RESULT_RANKING = 'field_2039122'
-const RESULT_CLASSIFIED_CATEGORY = 'field_2039143'
-const RESULT_CATEGORY_RANKING = 'field_2039144'
-const RESULT_REFEREE = 'field_2039145'
-const RESULT_BONUS = 'field_2039146'
-const RESULT_POINTS = 'field_2039147'
-const RESULT_RELATION = 'field_2041403'
+const RESULT_RELATION = 'aewCkDWQrdVkldTdy1quOq'
+const RESULT_TIME = 'dcP0FdTSnfWR4QWPb5W5qR'
+const RESULT_RANKING = 'aMWPtcHdLpCOkalxfPu3Pg'
+const RESULT_CLASSIFIED_CATEGORY = 'dcGSoOWPHcLQSCWPeWkCo7'
+const RESULT_CATEGORY_RANKING = 'bUW6jIW4HlW5JdGWvWemoR'
+const RESULT_REFEREE = 'dcL8kbW5zmWPxcPZWKW4uP'
+const RESULT_BONUS = 'ddKSk9WRnjW4JcReebWPv4'
+const RESULT_POINTS = 'auyCoscNHhWQuanmo0iCoA'
+const RESULT_LICENSEE = 'dcO8k-vSjnBkpcPSkpn8km'
 
-export const mapResultFields = (records) => {
+export const mapResultFields = (race_id, records) => {
   const obj_list = []
   for (let record of records) {
-    const obj = { id: record.id }
-    for (const [key, value_or_object_or_array] of Object.entries(record)) {
-      // convert field ID into field name
-      Object.assign(obj, mapResultField(key, value_or_object_or_array))
+    // filter results
+    if (record.rel_values[RESULT_RELATION].includes(race_id)) {
+      let obj = { id: record.id }
+      for (const [key, value] of Object.entries(record.values)) {
+        // convert field ID into field name
+        Object.assign(obj, mapResultField(key, value))
+      }
+      obj_list.push(obj)
     }
-    obj_list.push(obj)
   }
   return obj_list
 }

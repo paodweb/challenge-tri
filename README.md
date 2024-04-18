@@ -52,8 +52,8 @@ course :
 * Niveau de la course :             `level`
 * Coefficient de la course :        `coefficient`
 * Format de la course :             `format`
-* Nombre de coureuses classées :    `numberClassifiedWomenRunners`
-* Nombre de coureurs classés :      `numberClassifiedMenRunners`
+* Nombre de coureuses classées :    `numberClassifiedWomen`
+* Nombre de coureurs classés :      `numberClassifiedMen`
 * Temps de la première féminine :   `timeFirstWoman`
 * Temps du premier masculin :       `timeFirstMan`
 * Lien aux résultats :              `link`

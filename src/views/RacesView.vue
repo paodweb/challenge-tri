@@ -88,13 +88,15 @@
               <td class="px-3 py-4 text-sm text-gray-500">
                 <!-- niveau de la course -->
                 Niveau
-                <span class="text-sm font-semibold leading-6 text-gray-900">{{ race.level }}</span>
+                <span class="text-sm font-semibold leading-6 text-gray-900">{{
+                  mapCollection(race.level, 'level')
+                }}</span>
               </td>
               <td class="px-3 py-4 text-sm text-gray-500">
                 <!-- coefficient de la course -->
                 Coefficient
                 <span class="text-sm font-semibold leading-6 text-gray-900">{{
-                  race.coefficient
+                  mapCollection(race.coefficient, 'coefficient')
                 }}</span>
               </td>
               <td class="px-3 py-4 text-sm text-gray-500">
@@ -144,8 +146,8 @@
 import { onMounted, reactive, toRefs } from 'vue'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
-import { fetchApiRacesIn1Go } from '@/api'
-import { mapRacesFields } from '@/helpers'
+import { requestGetApiRace } from '@/api'
+import { mapCollection, mapRacesFields } from '@/helpers'
 import { useRaceListStore } from '@/stores/racelist'
 import { useRouter } from 'vue-router'
 
@@ -157,8 +159,8 @@ let records = []
 
 const update = (state) => {
   const store = useRaceListStore()
-  const fetchRaces = fetch(fetchApiRacesIn1Go())
-  fetchRaces
+  const promise = fetch(requestGetApiRace())
+  promise
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`)
@@ -166,7 +168,7 @@ const update = (state) => {
       return response.json()
     })
     .then((data) => {
-      records = mapRacesFields(data.records)
+      records = mapRacesFields(data.results)
       Object.assign(state, { races: records })
       store.add(records)
     })

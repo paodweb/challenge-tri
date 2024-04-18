@@ -30,11 +30,13 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_QDB_API_KEY: ${{ secrets.QDB_API_KEY }}
-          VITE_QDB_API_URL: ${{ vars.QDB_API_URL }}
-          VITE_QDB_APP_ID: ${{ vars.QDB_APP_ID }}
-          VITE_QDB_RACE_ID: ${{ vars.QDB_RACE_ID }}
-          VITE_QDB_RESULT_ID: ${{ vars.QDB_RESULT_ID }}
+          VITE_BRW_TOKEN: ${{ secrets.BRW_TOKEN }}
+          VITE_BRW_BASE_URL: ${{ vars.BRW_BASE_URL }}
+          VITE_BRW_RACES_TABLE_ID: ${{ vars.BRW_RACES_TABLE_ID }}
+          VITE_BRW_RACES_ORDER_BY: ${{ vars.BRW_RACES_ORDER_BY }}
+          VITE_BRW_RESULTS_TABLE_ID: ${{ vars.BRW_RESULTS_TABLE_ID }}
+          VITE_BRW_RESULTS_ORDER_BY: ${{ vars.BRW_RESULT_ORDER_BY }}
+          VITE_BRW_RESULTS_FILTER: ${{ vars.BRW_RESULTS_FILTER }}
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact

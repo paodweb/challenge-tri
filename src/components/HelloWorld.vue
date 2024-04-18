@@ -13,7 +13,9 @@ defineProps({
     <h1 class="pink">{{ msg }}</h1>
     <h3>
       Le challenge légendaire du club des Dauphins de l'Elorn triathlon Landerneau (DEL)
-      <a href="https://www.dauphinsdelelorn.com/" class="icon-link"><ArrowTopRightOnSquareIcon class="h-4 w-4 text-pink-500"/></a>.
+      <a href="https://www.dauphinsdelelorn.com/" class="icon-link"
+        ><ArrowTopRightOnSquareIcon class="h-4 w-4 text-pink-500" /></a
+      >.
     </h3>
   </div>
 </template>
