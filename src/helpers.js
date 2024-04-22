@@ -1,3 +1,40 @@
+// licensees fields
+const LICENSEE_FULLNAME = 'field_2065620'
+const LICENSEE_FIRSTNAME = 'field_2065657'
+const LICENSEE_FEMALE = 'field_2065622'
+const LICENSEE_SLUGNAME = 'field_2065653'
+const LICENSEE_AVATAR = 'field_2065658'
+
+export const namedLicenseeFields = (records) => {
+  const obj_list = []
+  for (const record of records) {
+    const obj = { id: record.id }
+    for (const [key, value] of Object.entries(record)) {
+      // convert field ID into field name
+      Object.assign(obj, mapLicenseeField(key, value))
+    }
+    obj_list.push(obj)
+  }
+  return obj_list
+}
+
+// convert field ID into field name
+const mapLicenseeField = (key, value) => {
+  if (key == LICENSEE_FULLNAME) {
+    return { licensee: value }
+  } else if (key == LICENSEE_FIRSTNAME) {
+    return { firstname: value }
+  } else if (key == LICENSEE_FEMALE) {
+    return { female: value }
+  } else if (key == LICENSEE_SLUGNAME) {
+    return { slugname: value }
+  } else if (key == LICENSEE_AVATAR) {
+    return { avatar: value }
+  } else {
+    return {}
+  }
+}
+
 // levels
 const levelCollection = {
   'code-level-a': { factor: 1.5, label: 'Championnat de Bretagne • x1.5' },
@@ -33,6 +70,22 @@ export const getSelectOptions = (collection) => {
   return list
 }
 
+export const mapCollection = (object_key, collection) => {
+  let dataCollection = {}
+  if (collection == 'coefficient') {
+    dataCollection = coefficientCollection
+  } else {
+    dataCollection = levelCollection
+  }
+
+  for (const [key, value] of Object.entries(dataCollection)) {
+    if (key == object_key) {
+      return value.factor.toString()
+    }
+  }
+  return '1.0' // @TODO improve returning featured element
+}
+
 // races fields
 const RACE_TITLE = 'field_2033316'
 const RACE_DATE = 'field_2033317'
@@ -47,7 +100,7 @@ const RACE_RESULTS_URL = 'field_2033330'
 const RACE_COMMENT = 'field_2033332'
 const RACE_CHILDREN = 'field_2041497'
 
-const init_fields = [
+const namedRaceList = [
   'title',
   'date',
   'level',
@@ -60,7 +113,7 @@ const init_fields = [
   'link',
   'comment'
 ]
-const crypted_fields = [
+const cryptedRaceFields = [
   RACE_TITLE,
   RACE_DATE,
   RACE_LEVEL,
@@ -76,13 +129,13 @@ const crypted_fields = [
 
 export const keyiedRaceFields = (data) => {
   const mapped = {}
-  init_fields.forEach((element, index) => {
-    mapped[crypted_fields.at(index)] = data[element]
+  namedRaceList.forEach((element, index) => {
+    mapped[cryptedRaceFields.at(index)] = data[element]
   })
   return mapped
 }
 
-export const mapRacesFields = (records) => {
+export const namedRaceFields = (records) => {
   const obj_list = []
   for (const record of records) {
     const obj = { id: record.id }
@@ -127,44 +180,79 @@ const mapRaceField = (key, mixed) => {
   }
 }
 
-export const mapCollection = (object_key, collection) => {
-  let dataCollection = {}
-  if (collection == 'coefficient') {
-    dataCollection = coefficientCollection
-  } else {
-    dataCollection = levelCollection
-  }
-
-  for (const [key, value] of Object.entries(dataCollection)) {
-    if (key == object_key) {
-      return value.factor.toString()
-    }
-  }
-  return '1.0' // @TODO improve returning featured element
-}
-
 // results fields
 const RESULT_LICENSEE = 'field_2039120'
-const RESULT_TIME = 'field_2039121'
 const RESULT_RANKING = 'field_2039122'
 const RESULT_CLASSIFIED_CATEGORY = 'field_2039143'
 const RESULT_CATEGORY_RANKING = 'field_2039144'
+const RESULT_TIME = 'field_2039121'
 const RESULT_REFEREE = 'field_2039145'
+const RESULT_PHOTO = 'field_2074997'
+const RESULT_VIDEO = 'field_2075022'
 const RESULT_BONUS = 'field_2039146'
 const RESULT_POINTS = 'field_2039147'
 const RESULT_RELATION = 'field_2041403'
 
-export const mapResultFields = (records) => {
+const namedResultList = [
+  'licensee',
+  'ranking',
+  'classifiedCategory',
+  'categoryRanking',
+  'time',
+  'referee',
+  'photo',
+  'video',
+  'bonus',
+  'points',
+  'relation'
+]
+
+const cryptedResultFields = [
+  RESULT_LICENSEE,
+  RESULT_RANKING,
+  RESULT_CLASSIFIED_CATEGORY,
+  RESULT_CATEGORY_RANKING,
+  RESULT_TIME,
+  RESULT_REFEREE,
+  RESULT_PHOTO,
+  RESULT_VIDEO,
+  RESULT_BONUS,
+  RESULT_POINTS,
+  RESULT_RELATION
+]
+
+export const keyiedResultFields = (data) => {
+  const mapped = {}
+  namedResultList.forEach((element, index) => {
+    mapped[cryptedResultFields.at(index)] = data[element]
+  })
+  return mapped
+}
+
+export const getRelationField = () => {
+  return RESULT_RELATION
+}
+
+export const namedResultFields = (records) => {
   const obj_list = []
   for (let record of records) {
     const obj = { id: record.id }
-    for (const [key, value_or_object_or_array] of Object.entries(record)) {
+    for (const [key, value] of Object.entries(record)) {
       // convert field ID into field name
-      Object.assign(obj, mapResultField(key, value_or_object_or_array))
+      Object.assign(obj, mapResultField(key, value))
     }
     obj_list.push(obj)
   }
   return obj_list
+}
+
+export const namedResultObjFields = (record) => {
+  const obj = { id: record.id }
+  for (const [key, value] of Object.entries(record)) {
+    // convert field ID into field name
+    Object.assign(obj, mapResultField(key, value))
+  }
+  return obj
 }
 
 // convert field ID into field name

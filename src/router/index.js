@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 
-//              view                form                component   fonction
+//              view                form                fonction
 //
 // Races:
-// - list       RacesView           ...                 ...         list all races
-// - create     RaceView            RaceForm            ...         create 1 race
-// - update     RaceView            RaceForm            ...         update 1 race
+// - list       RacesView           ...                 list all races
+// - create     RaceView            RaceForm            create 1 race
+// - update     RaceView            RaceForm            update 1 race
 //
 // Results:
-// - list       RaceResultsView     ...                 ...         list the results of 1 race
-// - create     RaceResultView      RaceResultForm      ...         create 1 result
-// - update     RaceResultView      RaceResultForm      ...         update 1 result
+// - list       RaceResultsView     ...                 list the results of 1 race
+// - create     RaceResultView      RaceResultForm      create 1 result from 1 race
+// - update     RaceResultView      RaceResultForm      update 1 result from 1 race
 //
 
 const router = createRouter({
@@ -23,32 +23,34 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/results',
-      name: 'results',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('@/views/ResultsView.vue')
-    },
-    {
       path: '/races',
       name: 'races',
       component: () => import('@/views/RacesView.vue')
     },
     {
-      path: '/create-race',
-      name: 'createrace',
+      path: '/race/create',
+      name: 'create-race',
       component: () => import('@/views/RaceFormView.vue')
     },
     {
-      path: '/update-race/:id',
-      name: 'updaterace',
+      path: '/race/:raceid/update',
+      name: 'update-race',
       component: () => import('@/views/RaceFormView.vue')
     },
     {
-      path: '/race/:id',
+      path: '/race/:raceid',
       name: 'race',
       component: () => import('@/views/RaceResultsView.vue')
+    },
+    {
+      path: '/race/:raceid/result/create',
+      name: 'create-result',
+      component: () => import('@/views/RaceResultFormView.vue')
+    },
+    {
+      path: '/race/:raceid/result/:resultid/update',
+      name: 'update-result',
+      component: () => import('@/views/RaceResultFormView.vue')
     }
   ]
 })

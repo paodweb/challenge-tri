@@ -14,36 +14,40 @@
       <button
         type="button"
         class="rounded-full bg-white p-1.5 text-sm font-semibold text-gray-900 shadow ring-1 ring-inset ring-gray-300 hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+        @click="goHome()"
+      >
+        <HomeIcon class="h-5 w-5 text-pink-500" aria-hidden="true" />
+      </button>
+      <button
+        type="button"
+        class="ml-2 rounded-full bg-white p-1.5 text-sm font-semibold text-gray-900 shadow ring-1 ring-inset ring-gray-300 hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
         @click="backNavigation()"
       >
         <ChevronLeftIcon class="h-5 w-5" aria-hidden="true" />
       </button>
       <button
         v-if="btnAction"
-        class="mr-3 ml-3 inline-flex items-center rounded-full bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
+        class="mr-2 ml-2 inline-flex items-center rounded-full bg-pink-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-pink-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
         :type="btnType"
         @click="$emit('on-click')"
       >
         {{ btnLabel }}
       </button>
-      <!--
-      <button type="button" class="rounded bg-indigo-50 px-2 py-1 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100">Button text</button>
-      <button type="button" class="rounded-md bg-pink-50 px-2.5 py-1.5 text-sm font-semibold text-pink-600 shadow-sm hover:bg-pink-100">
-      Ajouter une course
-      </button>
-      -->
     </div>
   </div>
   <hr class="shadow" />
 </template>
 
 <script setup>
-import { ChevronLeftIcon } from '@heroicons/vue/20/solid'
+import { ChevronLeftIcon, HomeIcon } from '@heroicons/vue/20/solid'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const backNavigation = () => {
   router.back()
+}
+const goHome = () => {
+  router.push({ name: 'races' })
 }
 
 defineProps({

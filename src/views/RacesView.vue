@@ -3,7 +3,7 @@
     title="Liste des courses"
     :subtitle="records.length"
     v-bind="btn_attrs"
-    @on-click="router.push('create-race')"
+    @on-click="router.push({ name: 'create-race' })"
   >
   </TheHeading>
   <div class="objects-list">
@@ -119,7 +119,7 @@
                 <div class="md:flex md:items-center md:justify-between">
                   <div class="min-w-0 flex">
                     <router-link
-                      :to="`/update-race/${race.id}`"
+                      :to="`/race/${race.id}/update`"
                       class="text-indigo-600 hover:text-indigo-900"
                       >Modifier</router-link
                     >
@@ -146,8 +146,8 @@
 import { onMounted, reactive, toRefs } from 'vue'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
 import TheHeading from '@/components/TheHeading.vue'
-import { requestGetApiRace } from '@/api'
-import { mapCollection, mapRacesFields } from '@/helpers'
+import { goPromise, requestGetApiRace } from '@/api'
+import { mapCollection, namedRaceFields } from '@/helpers'
 import { useRaceListStore } from '@/stores/racelist'
 import { useRouter } from 'vue-router'
 
@@ -157,24 +157,16 @@ const { races } = toRefs(state)
 const btn_attrs = { btnAction: true, btnLabel: 'Ajouter une course', btnType: 'button' }
 let records = []
 
-const update = (state) => {
+function process(data) {
+  records = namedRaceFields(data.results)
+  Object.assign(state, { races: records })
   const store = useRaceListStore()
+  store.add(records)
+}
+
+const update = (state) => {
   const promise = fetch(requestGetApiRace())
-  promise
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error: ${response.status}`)
-      }
-      return response.json()
-    })
-    .then((data) => {
-      records = mapRacesFields(data.results)
-      Object.assign(state, { races: records })
-      store.add(records)
-    })
-    .catch((error) => {
-      console.error(`could not get races: ${error}`)
-    })
+  goPromise(promise, 'get races', process)
 }
 const fcnUpdate = () => update(state)
 

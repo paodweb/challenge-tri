@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="onSubmit" role="form">
-    <TheHeading :title="title" :subtitle="form.title" v-bind="btn_attrs"> </TheHeading>
+    <TheHeading :title="title" :subtitle="form.title" v-bind="btn_attrs"></TheHeading>
     <div class="objects-list">
       <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
@@ -271,8 +271,8 @@
 import { onMounted, ref, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import { goPromise, requestPatchApiRace, requestPostApiRace } from '@/api'
 import { isDateValid, isPositiveStrictNumberValid, isTimeValid } from '@/dates'
-import { requestPatchApiRace, requestPostApiRace } from '@/api'
 import { getSelectOptions } from '@/helpers'
 import { useRaceListStore } from '@/stores/racelist'
 import TheHeading from '@/components/TheHeading.vue'
@@ -310,37 +310,11 @@ function onSubmit(evt) {
     // store data in db
     if (action.value == 'create') {
       const promise = fetch(requestPostApiRace(toRaw(form.value)))
-      promise
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`)
-          }
-          return response.json()
-        })
-        .then(() => {
-          // redirect to races path
-          router.push({ name: 'races' })
-        })
-        .catch((error) => {
-          console.error(`could not create race: ${error}`)
-        })
+      goPromise(promise, 'create race', process)
     } else {
       // update
       const promise = fetch(requestPatchApiRace(id.value, toRaw(form.value)))
-      promise
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`)
-          }
-          return response.json()
-        })
-        .then(() => {
-          // redirect to races path
-          router.push({ name: 'races' })
-        })
-        .catch((error) => {
-          console.error(`could not update race: ${error}`)
-        })
+      goPromise(promise, 'update race', process)
     }
     return true
   }
@@ -386,8 +360,14 @@ function isValid() {
   return check_ti_da && check_number_men && check_number_women && check_times
 }
 
-function loadForm(race_id) {
-  const race = toRaw(getRaceById.value(race_id))
+function process() {
+  // redirect to path
+  router.push({ name: 'races' })
+}
+
+function loadForm(raceid) {
+  // load data race
+  const race = toRaw(getRaceById.value(raceid))
   form.value = race
   id.value = race.id
 }
@@ -402,7 +382,7 @@ onMounted(() => {
   } else {
     title.value = 'Modifier la course'
     action.value = 'update'
-    loadForm(toRaw(router.currentRoute.value).params.id)
+    loadForm(toRaw(router.currentRoute.value).params.raceid)
   }
 })
 </script>
