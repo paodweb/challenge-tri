@@ -12,13 +12,15 @@ import SupportIcon from './icons/IconSupport.vue'
     <template #icon>
       <DocumentationIcon />
     </template>
-    <template #heading>Documentation</template>
-
-    Vue’s
-    <a href="https://vuejs.org/" class="vue-green" target="_blank" rel="noopener"
-      >official documentation</a
-    >
-    provides you with all information you need to get started.
+    <template #heading>Principe</template>
+    <p>
+      Le challenge est une compétition interne au sein du club, tous(tes) les licenciés(es) y
+      participent. Le principe est simple : chaque licencié(e) qui participe a une course de la
+      saison en cours, que ce soit une course sur route, un trail, un triathlon, un duathlon, un
+      swim&run, etc., rapporte un certain nombre de points en fonction de son classement. Plus
+      le(la) licencié(e) participe à des courses, plus il(elle) accumule des points. Le classement
+      permet de suivre l'évolution des points de chacun(e) tout au long de la saison.
+    </p>
   </WelcomeItem>
 
   <WelcomeItem>
@@ -26,58 +28,35 @@ import SupportIcon from './icons/IconSupport.vue'
       <EcosystemIcon />
     </template>
     <template #heading>Règlement</template>
-
-    Get official tools and libraries for your project:
-    <a href="https://pinia.vuejs.org/" class="vue-green" target="_blank" rel="noopener">Pinia</a>,
-    <a href="https://router.vuejs.org/" class="vue-green" target="_blank" rel="noopener"
-      >Vue Router</a
-    >,
-    <a href="https://test-utils.vuejs.org/" class="vue-green" target="_blank" rel="noopener"
-      >Vue Test Utils</a
-    >, and
-    <a href="https://github.com/vuejs/devtools" class="vue-green" target="_blank" rel="noopener"
-      >Vue Dev Tools</a
-    >. If you need more resources, we suggest paying
-    <a href="https://github.com/vuejs/awesome-vue" class="vue-green" target="_blank" rel="noopener"
-      >Awesome Vue</a
-    >
-    a visit.
-  </WelcomeItem>
-
-  <WelcomeItem>
-    <template #icon>
-      <CommunityIcon />
-    </template>
-    <template #heading>Community</template>
-
-    Got stuck? Ask your question on
-    <a href="https://chat.vuejs.org" class="vue-green" target="_blank" rel="noopener">Vue Land</a>,
-    our official Discord server, or
-    <a
-      href="https://stackoverflow.com/questions/tagged/vue.js"
-      class="vue-green"
-      target="_blank"
-      rel="noopener"
-      >StackOverflow</a
-    >. You should also subscribe to
-    <a href="https://news.vuejs.org" class="vue-green" target="_blank" rel="noopener"
-      >our mailing list</a
-    >
-    and follow the official
-    <a href="https://twitter.com/vuejs" class="vue-green" target="_blank" rel="noopener">@vuejs</a>
-    twitter account for latest news in the Vue world.
+    <p>Le règlement du challenge est strict et ne souffre d'aucune contestation possible... 😰</p>
+    <p>
+      Vous pouvez consulter le
+      <router-link :to="`/challenge-rules`" class="text-indigo-600 hover:text-indigo-900"
+        >règlement détaillé</router-link
+      >.
+    </p>
   </WelcomeItem>
 
   <WelcomeItem>
     <template #icon>
       <SupportIcon />
     </template>
-    <template #heading>Support Vue</template>
+    <template #heading>Fair play</template>
+    <p>
+      Le challenge reste un jeu... Il est évident bien sur que le fair play reste la règle
+      principale qui doit animer tous les participantes et tous les participants.
+    </p>
+  </WelcomeItem>
 
-    As an independent project, Vue relies on community backing for its sustainability. You can help
-    us by
-    <a href="https://vuejs.org/sponsor/" class="vue-green" target="_blank" rel="noopener"
-      >becoming a sponsor</a
-    >.
+  <WelcomeItem>
+    <template #icon>
+      <CommunityIcon />
+    </template>
+    <template #heading>Communauté</template>
+    <p>
+      Afin de faire perdurer la tradition du challenge, il est possible de télécharger une version
+      "tableur" du mode de calcul du challenge :<br />
+      <em>bientôt ici</em>.
+    </p>
   </WelcomeItem>
 </template>

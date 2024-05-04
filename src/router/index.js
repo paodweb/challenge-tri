@@ -23,6 +23,16 @@ const router = createRouter({
       component: HomeView
     },
     {
+      path: '/challenge-rules',
+      name: 'challenge-rules',
+      component: () => import('@/views/ChallengeRuleView.vue')
+    },
+    {
+      path: '/results',
+      name: 'results',
+      component: () => import('@/views/ResultsView.vue')
+    },
+    {
       path: '/races',
       name: 'races',
       component: () => import('@/views/RacesView.vue')

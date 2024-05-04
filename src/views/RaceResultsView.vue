@@ -141,7 +141,12 @@
 import { onMounted, reactive, ref, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon, TrashIcon } from '@heroicons/vue/20/solid'
-import { goPromise, noResponsePromise, requestDeleteApiResult, requestGetApiRaceResults } from '@/api'
+import {
+  goPromise,
+  noResponsePromise,
+  requestDeleteApiResult,
+  requestGetApiRaceResults
+} from '@/api'
 import { getRelationField, namedResultFields } from '@/helpers'
 import TheHeading from '@/components/TheHeading.vue'
 import TheModal from '@/components/TheModal.vue'

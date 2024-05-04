@@ -4,11 +4,11 @@
       <img src="@/assets/logo-del.svg" width="64" height="64" alt="DEl logo" class="logo" />
     </div>
     <div class="min-w-0 flex-1">
-      <h2
+      <h1
         class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight"
       >
         {{ title }} <small class="subtitle">&nbsp;{{ subtitle }}</small>
-      </h2>
+      </h1>
     </div>
     <div class="mt-4 flex md:ml-4 md:mt-0">
       <button
