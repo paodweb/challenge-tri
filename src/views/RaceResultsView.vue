@@ -141,12 +141,7 @@
 import { onMounted, reactive, ref, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon, TrashIcon } from '@heroicons/vue/20/solid'
-import {
-  goPromise,
-  noResponsePromise,
-  requestDeleteApiResult,
-  requestGetApiRaceResults
-} from '@/api'
+import { goPromise, requestDeleteApiResult, requestGetApiRaceResults } from '@/api'
 import { getRelationField, namedResultFields } from '@/helpers'
 import TheHeading from '@/components/TheHeading.vue'
 import TheModal from '@/components/TheModal.vue'
@@ -179,7 +174,7 @@ function processResult() {
 
 const doDelete = (action) => {
   const promise = fetch(requestDeleteApiResult(resultid.value))
-  noResponsePromise(promise, 'delete results', processResult)
+  goPromise(promise, 'delete results', processResult)
 }
 
 function process(data) {

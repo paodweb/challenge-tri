@@ -239,15 +239,15 @@ import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { Switch } from '@headlessui/vue'
 import {
+  getLicensees,
   goPromise,
-  requestGetApiLicensees,
   requestGetApiResult,
   requestPatchApiResult,
   requestPostApiResult
 } from '@/api'
 import { getCalculationPoints } from '@/calculation_rules'
 import { isPositiveStrictNumberValid, isTimeValid } from '@/dates'
-import { mapCollection, namedLicenseeFields, namedResultObjFields } from '@/helpers'
+import { mapCollection, namedResultObjFields } from '@/helpers'
 import { useRaceListStore } from '@/stores/racelist'
 import TheHeading from '@/components/TheHeading.vue'
 
@@ -356,10 +356,6 @@ function process(data) {
   router.push({ name: 'race', params: { raceid: raceid.value } })
 }
 
-function processLicensees(data) {
-  records.value = namedLicenseeFields(data.results)
-}
-
 function processResult(data) {
   const result = namedResultObjFields(data)
   form.value = result
@@ -374,8 +370,10 @@ function loadForm(resultid) {
 
 onMounted(() => {
   // load licensees list
-  const promise = fetch(requestGetApiLicensees())
-  goPromise(promise, 'get licensees', processLicensees)
+  const licensees = getLicensees(2)  // page number
+  licensees
+    .then((data) => records.value = data)
+    .catch((error) => { console.error(`could not get licensees: ${error}`) })
 
   // load data race
   const route = useRoute()

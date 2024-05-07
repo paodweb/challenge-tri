@@ -1,3 +1,9 @@
+// import { v4 as uuidv4 } from 'uuid'
+import { keyiedRaceFields, keyiedResultFields, namedLicenseeFields } from '@/helpers'
+
+const DEFAULT_PAGE = 1
+const DEFAULT_SIZE = 100
+
 // execute one promise
 export const goPromise = (promise, action, fcn) => {
   promise
@@ -5,7 +11,12 @@ export const goPromise = (promise, action, fcn) => {
       if (!response.ok) {
         throw new Error(`HTTP error: ${response.status}`)
       }
-      return response.json()
+      if (response.status != 204) {
+        return response.json()
+      } else {
+        // delete call: no content
+        return null
+      }
     })
     .then((data) => {
       fcn(data)
@@ -14,26 +25,6 @@ export const goPromise = (promise, action, fcn) => {
       console.error(`could not ${action}: ${error}`)
     })
 }
-
-// execute a promise with empty response
-export const noResponsePromise = (promise, action, fcn) => {
-  promise
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error: ${response.status}`)
-      }
-      fcn()
-    })
-    .catch((error) => {
-      console.error(`could not ${action}: ${error}`)
-    })
-}
-
-// import { v4 as uuidv4 } from 'uuid'
-import { keyiedRaceFields, keyiedResultFields } from '@/helpers'
-
-const DEFAULT_PAGE = 1
-const DEFAULT_SIZE = 100
 
 // races
 
@@ -86,43 +77,24 @@ export const requestGetApiLicensees = () => {
   return rq.get()
 }
 
-// points
-
-/*
-export const requestPostApiPoints = (data) => {
-  const rq = new BaseRequestApi()
-  const url = `https://8jgv385jg8.execute-api.eu-west-3.amazonaws.com/default/signature`
-  const body = {
-    jobName: 'challenge-calculate',
-    jobQueue: 'default',
-    jobDefinition: 'hello-world',
-    race: {
-      race_level: 1.0,
-      race_coefficient: 1.0,
-      is_championship: false,
-      is_triathlon: false,
-      is_britain_form: 0,
-      is_triathlon_form: 0,
-      format_triathlon_form: 'm',
-      classified_men_number: 974,
-      classified_women_number: 201,
-      man_running_time: '00:55:08',
-      woman_running_time: '01:06:05'
-    },
-    licensee: {
-      runner_ranking: 514,
-      classified_in_category: 228,
-      ranking_in_category: 151,
-      runner_running_time: '01:27:52',
-      ptn_bonus_referee: 0,
-      ptn_bonus_photo: 0,
-      ptn_bonus_video: 0,
-      ptn_bonus: 0
-    }
-  }
-  return rq.request(url, body, 'POST')
+export async function getLicensees(callsNumber) {
+  // Get licensees with multiple calls to api
+  const rq = new ListApiLicensees()
+  const requests = Array.from({ length: callsNumber }, (v, i) =>
+    rq.request(`${rq.getUrl()}?order_by=${rq.order_by}&page=${1 + i}`, undefined, 'GET')
+  )
+  const promises = requests.map((promise) =>
+    fetch(promise)
+      .then((res) => res.json())
+      .then((data) => data.results)
+      .catch((error) => {
+        console.error(`could not get licensees: ${error}`)
+      })
+  )
+  const rawdata = (await Promise.all(promises)).flat()
+  // convert fields id with fields name
+  return namedLicenseeFields(rawdata)
 }
-*/
 
 // base api
 
