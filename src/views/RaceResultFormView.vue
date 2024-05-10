@@ -35,7 +35,7 @@
                   class="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:max-w-md sm:text-sm sm:leading-6"
                   required
                 >
-                  <option v-for="option in records" :key="option.id" :value="option.licensee">
+                  <option v-for="option in licensees" :key="option.id" :value="option.id">
                     {{ option.licensee }}
                   </option>
                 </select>
@@ -273,7 +273,7 @@ let raceid = ref('')
 let resultid = ref('')
 let dataRace = ref({})
 let dataLicensee = ref({})
-let records = ref([])
+let licensees = ref([])
 
 function onSubmit(evt) {
   evt.preventDefault()
@@ -285,6 +285,10 @@ function onSubmit(evt) {
     const bonusPhoto = toRaw(form.value).bonusPhoto
     const bonusVideo = toRaw(form.value).bonusVideo
     const bonus = toRaw(form.value).bonus
+    // here it is tricky: get name from array licensees with id (got it in form)
+    const licenseeId = parseInt(toRaw(form.value).licensee)
+    form.value.licensee = getLicensee(licenseeId)
+
     dataLicensee.value = {
       runner_ranking: parseInt(toRaw(form.value).ranking),
       classified_in_category: parseInt(toRaw(form.value).classifiedCategory),
@@ -304,15 +308,16 @@ function onSubmit(evt) {
       licensee: toRaw(dataLicensee.value)
     }
 
+    // @TODO season: 2024
     const saveForm = {
       ...toRaw(form.value),
       points: getCalculationPoints(JSON.stringify(scoreData)),
-      relation: [raceid.value]
+      race_relation: [raceid.value],
+      licensee_relation: [licenseeId]
     }
 
     // store data in db (create or update)
     if (action.value == 'create') {
-      // toRaw(form.value)
       const promise = fetch(requestPostApiResult(saveForm))
       goPromise(promise, 'create result', process)
     } else {
@@ -358,6 +363,9 @@ function process(data) {
 
 function processResult(data) {
   const result = namedResultObjFields(data)
+  // here it is tricky: get id from licensees array with name (got it from loaded array)
+  // or from relation
+  result.licensee = result.licensee_relation[0].id
   form.value = result
   resultid.value = result.id
 }
@@ -368,11 +376,20 @@ function loadForm(resultid) {
   goPromise(promise, 'get result', processResult)
 }
 
+function getLicensee(id) {
+  for (const [key, item] of Object.entries(licensees.value)) {
+    if (toRaw(item).id == id) {
+      return toRaw(item).licensee
+    }
+  }
+  return null
+}
+
 onMounted(() => {
   // load licensees list
-  const licensees = getLicensees(2)  // page number
-  licensees
-    .then((data) => records.value = data)
+  const promise = getLicensees(2) // page number
+  promise
+    .then((data) => licensees.value = data)
     .catch((error) => { console.error(`could not get licensees: ${error}`) })
 
   // load data race

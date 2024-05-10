@@ -191,7 +191,9 @@ const RESULT_PHOTO = 'field_2074997'
 const RESULT_VIDEO = 'field_2075022'
 const RESULT_BONUS = 'field_2039146'
 const RESULT_POINTS = 'field_2039147'
-const RESULT_RELATION = 'field_2041403'
+const RESULT_RACE_RELATION = 'field_2041403'
+const RESULT_LICENSEE_RELATION = 'field_2121702'
+const RESULT_SEASON = 'field_2121042'
 
 const namedResultList = [
   'licensee',
@@ -204,7 +206,8 @@ const namedResultList = [
   'video',
   'bonus',
   'points',
-  'relation'
+  'race_relation',
+  'licensee_relation',
 ]
 
 const cryptedResultFields = [
@@ -218,7 +221,8 @@ const cryptedResultFields = [
   RESULT_VIDEO,
   RESULT_BONUS,
   RESULT_POINTS,
-  RESULT_RELATION
+  RESULT_RACE_RELATION,
+  RESULT_LICENSEE_RELATION
 ]
 
 export const keyiedResultFields = (data) => {
@@ -229,8 +233,8 @@ export const keyiedResultFields = (data) => {
   return mapped
 }
 
-export const getRelationField = () => {
-  return RESULT_RELATION
+export const getRaceRelationField = () => {
+  return RESULT_RACE_RELATION
 }
 
 export const namedResultFields = (records) => {
@@ -257,8 +261,10 @@ export const namedResultObjFields = (record) => {
 
 // convert field ID into field name
 const mapResultField = (key, value) => {
-  if (key == RESULT_RELATION) {
-    return { relation: value }
+  if (key == RESULT_RACE_RELATION) {
+    return { race_relation: value }
+  } else if (key == RESULT_LICENSEE_RELATION) {
+    return { licensee_relation: value }
   } else if (key == RESULT_TIME) {
     return { time: value }
   } else if (key == RESULT_RANKING) {

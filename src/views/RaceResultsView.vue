@@ -142,7 +142,7 @@ import { onMounted, reactive, ref, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ArrowTopRightOnSquareIcon, ChevronRightIcon, TrashIcon } from '@heroicons/vue/20/solid'
 import { goPromise, requestDeleteApiResult, requestGetApiRaceResults } from '@/api'
-import { getRelationField, namedResultFields } from '@/helpers'
+import { getRaceRelationField, namedResultFields } from '@/helpers'
 import TheHeading from '@/components/TheHeading.vue'
 import TheModal from '@/components/TheModal.vue'
 
@@ -180,7 +180,7 @@ const doDelete = (action) => {
 function process(data) {
   let title_str = 'no title'
   if (data.results.length > 0) {
-    title_str = data.results[0][getRelationField()][0].value
+    title_str = data.results[0][getRaceRelationField()][0].value
   }
   Object.assign(state, {
     title: title_str,

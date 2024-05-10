@@ -10,7 +10,7 @@
         {{ title }} <small class="subtitle">&nbsp;{{ subtitle }}</small>
       </h1>
     </div>
-    <div class="mt-4 flex md:ml-4 md:mt-0">
+    <div class="mt-4 flex md:ml-4 md:mt-0" v-if="show">
       <button
         type="button"
         class="rounded-full bg-white p-1.5 text-sm font-semibold text-gray-900 shadow ring-1 ring-inset ring-gray-300 hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
@@ -39,8 +39,20 @@
 </template>
 
 <script setup>
-import { ChevronLeftIcon, HomeIcon } from '@heroicons/vue/20/solid'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { ChevronLeftIcon, HomeIcon } from '@heroicons/vue/20/solid'
+
+const show = ref(true)
+
+const props = defineProps({
+  title: String,
+  subtitle: String,
+  btnAction: String,
+  btnLabel: String,
+  btnType: String,
+  showButtons: { type: Boolean, default: true }
+})
 
 const router = useRouter()
 const backNavigation = () => {
@@ -50,11 +62,9 @@ const goHome = () => {
   router.push({ name: 'races' })
 }
 
-defineProps({
-  title: String,
-  subtitle: String,
-  btnAction: String,
-  btnLabel: String,
-  btnType: String
+onMounted(() => {
+  if (!props.showButtons) {
+    show.value = props.showButtons
+  }
 })
 </script>

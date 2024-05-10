@@ -30,7 +30,7 @@ const router = createRouter({
     {
       path: '/results',
       name: 'results',
-      component: () => import('@/views/ResultsView.vue')
+      component: () => import('@/views/PublicResultsView.vue')
     },
     {
       path: '/races',
