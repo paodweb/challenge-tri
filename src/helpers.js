@@ -6,6 +6,9 @@ const LICENSEE_SLUGNAME = 'field_2065653'
 const LICENSEE_AVATAR = 'field_2065658'
 const LICENSEE_RESULTS_LINK = 'field_2121701'
 const LICENSEE_SUM_POINTS = 'field_2121703'
+const LICENSEE_WOMAN_POINTS = 'field_2123726'
+const LICENSEE_RANKING = 'field_2123741'
+const LICENSEE_IS_TRIATHLON = 'field_2123971'
 
 export const namedLicenseeFields = (records) => {
   const obj_list = []
@@ -36,6 +39,12 @@ const mapLicenseeField = (key, value) => {
     return { results: value }
   } else if (key == LICENSEE_SUM_POINTS) {
     return { sumPoints: value }
+  } else if (key == LICENSEE_WOMAN_POINTS) {
+    return { womanPoints: value }
+  } else if (key == LICENSEE_RANKING) {
+    return { ranking: value }
+  } else if (key == LICENSEE_IS_TRIATHLON) {
+    return { isTriathlon: value }
   } else {
     return {}
   }

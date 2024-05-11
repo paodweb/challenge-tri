@@ -3,7 +3,7 @@
   <br />
   <p>
     <span class="text-gray-500">Légende : </span>
-    <WomenRankingBadge></WomenRankingBadge>
+    <WomanRankingBadge></WomanRankingBadge>
     <span class="text-pink-700">&nbsp;classement féminin</span>&nbsp;
     <RankedFirstBadge></RankedFirstBadge>
     <span class="text-yellow-800"
@@ -18,5 +18,5 @@
 <script setup>
 import ContestedTriathlonsBadge from '@/components/ContestedTriathlonsBadge.vue'
 import RankedFirstBadge from '@/components/RankedFirstBadge.vue'
-import WomenRankingBadge from '@/components/WomenRankingBadge.vue'
+import WomanRankingBadge from '@/components/WomanRankingBadge.vue'
 </script>

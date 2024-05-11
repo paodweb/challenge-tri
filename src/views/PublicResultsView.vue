@@ -11,9 +11,9 @@
           <TheImgAvatar v-bind="item"></TheImgAvatar>
           <div class="min-w-0 flex-auto">
             <p class="text-lg font-semibold leading-6 text-gray-600">{{ item.licensee }}</p>
-            <WomenRankingBadge v-if="item.womanRanking" class="mr-2">{{
+            <WomanRankingBadge v-if="item.womanPoints > 0" class="mr-2">{{
               item.womanRanking
-            }}</WomenRankingBadge>
+            }}</WomanRankingBadge>
             <RankedFirstBadge v-if="item.rankedFirst" class="mr-2">{{
               item.rankedFirst
             }}</RankedFirstBadge>
@@ -39,22 +39,52 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, toRaw } from 'vue'
 import { goPromise, requestGetApiPublicLicensees } from '@/api'
 import { namedLicenseeFields } from '@/helpers'
 import { ChevronRightIcon } from '@heroicons/vue/20/solid'
 import ContestedTriathlonsBadge from '@/components/ContestedTriathlonsBadge.vue'
 import RankedFirstBadge from '@/components/RankedFirstBadge.vue'
-import WomenRankingBadge from '@/components/WomenRankingBadge.vue'
+import WomanRankingBadge from '@/components/WomanRankingBadge.vue'
 import TheImgAvatar from '@/components/TheImgAvatar.vue'
 import TheHeading from '@/components/TheHeading.vue'
 import TheLegend from '@/components/TheLegend.vue'
 
 let licensees = ref([])
+let womanRankCounter = ref(1)
 
 function process(data) {
   licensees.value = namedLicenseeFields(data.results)
-  console.log(2.1, licensees)
+
+  for (const [key, item] of Object.entries(licensees.value)) {
+    // women ranking
+    if (item.womanPoints > 0) {
+      item.womanRanking = womanRankCounter.value
+      womanRankCounter.value += 1
+    }
+    // ranked first
+    if (item.ranking) {
+      let rankedFirst = 0
+      // count true inside loop
+      for (const [k, elem] of Object.entries(toRaw(item.ranking))) {
+        if (elem.value) {
+          rankedFirst += 1
+        }
+      }
+      item.rankedFirst = rankedFirst
+    }
+    // contested triathlon
+    if (item.isTriathlon) {
+      let contestedTriathlon = 0
+      // count true inside loop
+      for (const [k, elem] of Object.entries(toRaw(item.isTriathlon))) {
+        if (elem.value) {
+          contestedTriathlon += 1
+        }
+      }
+      item.contestedTriathlon = contestedTriathlon
+    }
+  }
 }
 
 onMounted(() => {
