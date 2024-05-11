@@ -1,5 +1,7 @@
 <template>
-  <span :class="`inline-flex items-center rounded-full bg-${bgColor} px-2 py-1 text-xs font-medium text-${textColor}`">
+  <span
+    :class="`inline-flex items-center rounded-full bg-${bgColor} px-2 py-1 text-xs font-medium text-${textColor}`"
+  >
     <slot>{{ textBadged }}</slot>
   </span>
 </template>

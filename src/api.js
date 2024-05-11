@@ -96,6 +96,11 @@ export async function getLicensees(callsNumber) {
   return namedLicenseeFields(rawdata)
 }
 
+export const requestGetApiPublicLicensees = () => {
+  const rq = new ListApiPublicLicensees()
+  return rq.get()
+}
+
 // base api
 
 class BaseRequestApi {
@@ -136,8 +141,8 @@ class CreateListRequestApi extends BaseRequestApi {
 }
 
 class ListRequestApi extends BaseRequestApi {
-  get(id) {
-    const url = `${this.getUrl()}?order_by=${this.order_by}&filter__${this.filter}__link_row_has=${id}`
+  get(id = 0) {
+    const url = `${this.getUrl()}?order_by=${this.order_by}&filter__${this.filter_field}__${this.filter}=${id}`
     return super.request(url, undefined, 'GET')
   }
 }
@@ -174,6 +179,7 @@ let BaseApiResultMixin = (Base) =>
       super()
       this.table_id = import.meta.env.VITE_BRW_RESULTS_TABLE_ID
       this.order_by = import.meta.env.VITE_BRW_RESULTS_ORDER_BY
+      this.filter_field = import.meta.env.VITE_BRW_RESULTS_FILTER_FIELD
       this.filter = import.meta.env.VITE_BRW_RESULTS_FILTER
       this.keyiedFcn = keyiedResultFields
     }
@@ -185,6 +191,17 @@ let BaseApiLicenseeMixin = (Base) =>
       super()
       this.table_id = import.meta.env.VITE_BRW_LICENSEES_TABLE_ID
       this.order_by = import.meta.env.VITE_BRW_LICENSEES_ORDER_BY
+    }
+  }
+
+let BaseApiPublicLicenseeMixin = (Base) =>
+  class extends Base {
+    constructor() {
+      super()
+      this.table_id = import.meta.env.VITE_BRW_LICENSEES_TABLE_ID
+      this.order_by = import.meta.env.VITE_BRW_PUBLIC_LICENSEES_ORDER_BY
+      this.filter_field = import.meta.env.VITE_BRW_PUBLIC_LICENSEES_FILTER_FIELD
+      this.filter = import.meta.env.VITE_BRW_PUBLIC_LICENSEES_FILTER
     }
   }
 
@@ -201,3 +218,5 @@ class ListApiLicensees extends BaseApiLicenseeMixin(CreateListRequestApi) {}
 class CreateApiResult extends BaseApiResultMixin(CreateListRequestApi) {}
 
 class UpdateDestroyApiResult extends BaseApiResultMixin(RetrieveUpdateDestroyRequestApi) {}
+
+class ListApiPublicLicensees extends BaseApiPublicLicenseeMixin(ListRequestApi) {}

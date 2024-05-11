@@ -4,6 +4,8 @@ const LICENSEE_FIRSTNAME = 'field_2065657'
 const LICENSEE_FEMALE = 'field_2065622'
 const LICENSEE_SLUGNAME = 'field_2065653'
 const LICENSEE_AVATAR = 'field_2065658'
+const LICENSEE_RESULTS_LINK = 'field_2121701'
+const LICENSEE_SUM_POINTS = 'field_2121703'
 
 export const namedLicenseeFields = (records) => {
   const obj_list = []
@@ -30,6 +32,10 @@ const mapLicenseeField = (key, value) => {
     return { slugname: value }
   } else if (key == LICENSEE_AVATAR) {
     return { avatar: value }
+  } else if (key == LICENSEE_RESULTS_LINK) {
+    return { results: value }
+  } else if (key == LICENSEE_SUM_POINTS) {
+    return { sumPoints: value }
   } else {
     return {}
   }
@@ -207,7 +213,7 @@ const namedResultList = [
   'bonus',
   'points',
   'race_relation',
-  'licensee_relation',
+  'licensee_relation'
 ]
 
 const cryptedResultFields = [

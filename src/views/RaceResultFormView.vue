@@ -389,8 +389,10 @@ onMounted(() => {
   // load licensees list
   const promise = getLicensees(2) // page number
   promise
-    .then((data) => licensees.value = data)
-    .catch((error) => { console.error(`could not get licensees: ${error}`) })
+    .then((data) => (licensees.value = data))
+    .catch((error) => {
+      console.error(`could not get licensees: ${error}`)
+    })
 
   // load data race
   const route = useRoute()
