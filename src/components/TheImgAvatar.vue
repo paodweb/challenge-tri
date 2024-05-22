@@ -1,5 +1,10 @@
 <template>
-  <img v-if="avatar" :src="imageUrl" class="h-12 w-12 flex-none rounded-full bg-gray-50" :alt="`photo ${licensee}`" />
+  <img
+    v-if="avatar"
+    :src="imageUrl"
+    class="h-12 w-12 flex-none rounded-full bg-gray-50"
+    :alt="`photo ${licensee}`"
+  />
   <TheAvatar v-else :female="female" :name="licensee"></TheAvatar>
 </template>
 

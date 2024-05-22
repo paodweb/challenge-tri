@@ -57,7 +57,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="race in races" :key="race.id" class="even:bg-gray-50">
+            <tr v-for="race in races" :key="race.id" class="odd:bg-gray-50">
               <td class="relative py-4 pr-3 text-lg font-medium text-gray-800">
                 <div class="md:flex md:items-center">
                   <div class="min-w-0 flex">

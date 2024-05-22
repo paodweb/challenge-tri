@@ -3,7 +3,11 @@
   <div class="objects-list">
     <TheLegend></TheLegend>
     <ul role="list" class="divide-y divide-gray-100">
-      <li v-for="(item, index) in licensees" :key="item.id" class="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6 lg:px-8">
+      <li
+        v-for="(item, index) in licensees"
+        :key="item.id"
+        class="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6 lg:px-8"
+      >
         <div class="flex min-w-0 gap-x-4">
           <div class="min-w-0 flex-auto">
             <p class="text-2xl text-gray-400" :class="{ 'mr-3': index < 9 }">{{ 1 + index }}</p>
@@ -31,7 +35,9 @@
               <template v-else>course</template>
             </p>
           </div>
-          <ChevronRightIcon class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
+          <router-link :to="`/detail/${item.slugname}`">
+            <ChevronRightIcon class="h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
+          </router-link>
         </div>
       </li>
     </ul>
