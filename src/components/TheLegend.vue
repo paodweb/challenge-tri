@@ -1,7 +1,6 @@
 <template>
-  <h1 class="pink heading text-center">🚧 &nbsp;En construction&nbsp;🚧</h1>
-  <br />
-  <p>
+  <UnderConstruction></UnderConstruction>
+  <p class="pt-5">
     <span class="text-gray-500">Légende : </span>
     <WomanRankingBadge></WomanRankingBadge>
     <span class="text-pink-700">&nbsp;classement féminin</span>&nbsp;
@@ -18,5 +17,6 @@
 <script setup>
 import ContestedTriathlonsBadge from '@/components/ContestedTriathlonsBadge.vue'
 import RankedFirstBadge from '@/components/RankedFirstBadge.vue'
+import UnderConstruction from '@/components/UnderConstruction.vue'
 import WomanRankingBadge from '@/components/WomanRankingBadge.vue'
 </script>

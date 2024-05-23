@@ -33,9 +33,9 @@ const router = createRouter({
       component: () => import('@/views/PublicResultsView.vue')
     },
     {
-      path: '/detail/:slugname',
+      path: '/detail/:licenseeid/:licensee/:racesNumber/:pointsNumber',
       name: 'details',
-      component: () => import('@/views/PublicDetailsView.vue')
+      component: () => import('@/views/PublicDetailView.vue')
     },
     {
       path: '/races',

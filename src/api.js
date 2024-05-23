@@ -70,6 +70,12 @@ export const requestDeleteApiResult = (resultId) => {
   return rq.delete(resultId)
 }
 
+// promise api different from others: results are already named
+export const requestGetApiPublicResult = (licenseeId) => {
+  const rq = new ListApiPublicResults()
+  return rq.get(licenseeId)
+}
+
 // licensees
 
 export const requestGetApiLicensees = () => {
@@ -147,6 +153,13 @@ class ListRequestApi extends BaseRequestApi {
   }
 }
 
+class ListRequestPublicApi extends BaseRequestApi {
+  get(licenseeId) {
+    const url = `${this.getUrl()}?order_by=-race_date&filter__challenge_licensees__link_row_has=${licenseeId}&user_field_names=true`
+    return super.request(url, undefined, 'GET')
+  }
+}
+
 class RetrieveUpdateDestroyRequestApi extends BaseRequestApi {
   delete(id) {
     const url = `${this.getUrl()}${id}/`
@@ -220,3 +233,5 @@ class CreateApiResult extends BaseApiResultMixin(CreateListRequestApi) {}
 class UpdateDestroyApiResult extends BaseApiResultMixin(RetrieveUpdateDestroyRequestApi) {}
 
 class ListApiPublicLicensees extends BaseApiPublicLicenseeMixin(ListRequestApi) {}
+
+class ListApiPublicResults extends BaseApiResultMixin(ListRequestPublicApi) {}
