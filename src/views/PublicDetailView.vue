@@ -70,7 +70,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, toRaw } from 'vue'
 import { useRoute } from 'vue-router'
 import { goPromise, requestGetApiPublicResult } from '@/api'
 import TheBull from '@/components/TheBull.vue'
@@ -88,8 +88,34 @@ function process(data) {
   results.value = data.results
 
   for (const [key, item] of Object.entries(results.value)) {
-    // add stickers: ['bonus-1-cat', 'triathlon-l']
-    item.stickers = ['bonus-1-cat', 'triathlon-l']
+    item.stickers = []
+
+    // ranking
+    if (item.ranking === "1") {
+      item.stickers.push('bonus-1-scr')
+    } else if (item.category_ranking === "1") {
+      item.stickers.push('bonus-1-cat')
+    }
+
+    // triathlon
+    if (item.race_is_triathlon) {
+      const size = item.race_size_triathlon.toLowerCase()
+      item.stickers.push(`triathlon-${size}`)
+    }
+
+    // bonus
+    if (item.referee !== null) {
+      item.stickers.push('bonus-referee')
+    }
+    if (item.video !== null) {
+      item.stickers.push('bonus-video')
+    }
+    if (item.photo !== null) {
+      item.stickers.push('bonus-photo')
+    }
+    if (item.bonus !== "0") {
+      item.stickers.push('bonus-bonus')
+    }
   }
 }
 

@@ -1,5 +1,4 @@
 <template>
-  <UnderConstruction></UnderConstruction>
   <p class="pt-5">
     <span class="text-gray-500">Légende : </span>
     <WomanRankingBadge></WomanRankingBadge>
