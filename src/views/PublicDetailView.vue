@@ -12,7 +12,9 @@
         <div class="min-w-0 flex-auto">
           <p class="text-sm font-semibold leading-6 text-gray-900">
             <span class="absolute inset-x-0 -top-px bottom-0"></span>
-            <span class="text-lg font-semibold leading-6 text-pink-600">{{ item.challenge_races[0].value }}</span>
+            <span class="text-lg font-semibold leading-6 text-pink-600">{{
+              item.challenge_races[0].value
+            }}</span>
             <small class="text-sm px-3 text-gray-400">{{ item.race_date }}</small>
           </p>
           <div class="mt-1 mb-2">
@@ -68,7 +70,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, toRaw } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { goPromise, requestGetApiPublicResult } from '@/api'
 import TheBull from '@/components/TheBull.vue'
@@ -84,13 +86,16 @@ const results = ref([])
 
 function process(data) {
   results.value = data.results
-  console.log(2.1, toRaw(results.value))
+
+  for (const [key, item] of Object.entries(results.value)) {
+    // add stickers: ['bonus-1-cat', 'triathlon-l']
+    item.stickers = ['bonus-1-cat', 'triathlon-l']
+  }
 }
 
 onMounted(() => {
   // load results licensee
   const route = useRoute()
-  console.log(1.1, route.params)
   subtitle.value = route.params.licensee
   racesNumber.value = route.params.racesNumber
   pointsNumber.value = route.params.pointsNumber

@@ -35,7 +35,9 @@
               <template v-else>course</template>
             </p>
           </div>
-          <router-link :to="`/detail/${item.id}/${item.licensee}/${item.results.length}/${item.sumPoints}`">
+          <router-link
+            :to="`/detail/${item.id}/${item.licensee}/${item.results.length}/${item.sumPoints}`"
+          >
             <ChevronRightIcon class="h-5 w-5 flex-none text-indigo-600" aria-hidden="true" />
           </router-link>
         </div>
