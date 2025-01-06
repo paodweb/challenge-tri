@@ -73,7 +73,7 @@ import { ref, watch } from 'vue'
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 
-const emit = defineEmits(['on-delete'])
+const emit = defineEmits(['on-close', 'on-confirm', 'on-delete'])
 const props = defineProps({
   show: Boolean
 })

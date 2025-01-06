@@ -1,8 +1,8 @@
 <template>
   <TheHeading
     title="Liste des courses"
-    :subtitle="records.length"
-    v-bind="btn_attrs"
+    :subtitle=records.length.toString()
+    v-bind=btn_attrs
     @on-click="router.push({ name: 'create-race' })"
   >
   </TheHeading>
@@ -61,7 +61,9 @@
               <td class="relative py-4 pr-3 text-lg font-medium text-gray-800">
                 <div class="md:flex md:items-center">
                   <div class="min-w-0 flex">
-                    <router-link :to="`/race/${race.id}`">{{ race.title }}&nbsp;</router-link>
+                    <router-link :to="`/race/${race.id}`"
+                      >{{ race.title }}&nbsp;</router-link
+                    >
                   </div>
                   <div class="mt-4 flex md:ml-4 md:mt-0">
                     <p class="text-sm text-gray-500">{{ race.date }}</p>
@@ -74,7 +76,9 @@
                 </div>
               </td>
               <td class="hidden px-3 py-4 text-sm text-gray-500 md:table-cell">
-                <dl class="flex w-full flex-none justify-between gap-x-8 items-center sm:w-auto">
+                <dl
+                  class="flex w-full flex-none justify-between gap-x-8 items-center sm:w-auto"
+                >
                   <div class="flex w-16 gap-x-2.5">
                     <!-- nombre de licencié.s.es DEL -->
                     <span
@@ -89,14 +93,14 @@
                 <!-- niveau de la course -->
                 Niveau
                 <span class="text-sm font-semibold leading-6 text-gray-900">{{
-                  mapCollection(race.level, 'level')
+                  mapCollection(race.level, "level")
                 }}</span>
               </td>
               <td class="px-3 py-4 text-sm text-gray-500">
                 <!-- coefficient de la course -->
                 Coefficient
                 <span class="text-sm font-semibold leading-6 text-gray-900">{{
-                  mapCollection(race.coefficient, 'coefficient')
+                  mapCollection(race.coefficient, "coefficient")
                 }}</span>
               </td>
               <td class="px-3 py-4 text-sm text-gray-500">
@@ -143,33 +147,33 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, toRefs } from 'vue'
-import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
-import TheHeading from '@/components/TheHeading.vue'
-import { goPromise, requestGetApiRace } from '@/api'
-import { mapCollection, namedRaceFields } from '@/helpers'
-import { useRaceListStore } from '@/stores/racelist'
-import { useRouter } from 'vue-router'
+import { onMounted, reactive, toRefs } from "vue";
+import { ArrowTopRightOnSquareIcon, ChevronRightIcon } from "@heroicons/vue/20/solid";
+import TheHeading from "@/components/TheHeading.vue";
+import { goPromise, requestGetApiRace } from "@/api";
+import { mapCollection, namedRaceFields } from "@/helpers";
+import { useRaceListStore } from "@/stores/racelist";
+import { useRouter } from "vue-router";
 
-const router = useRouter()
-const state = reactive({ races: [] })
-const { races } = toRefs(state)
-const btn_attrs = { btnAction: true, btnLabel: 'Ajouter une course', btnType: 'button' }
-let records = []
+const router = useRouter();
+const state = reactive({ races: [] });
+const { races } = toRefs(state);
+const btn_attrs = { btnAction: true, btnLabel: "Ajouter une course", btnType: "button" };
+let records = [];
 
 function process(data) {
-  records = namedRaceFields(data.results)
-  Object.assign(state, { races: records })
-  const store = useRaceListStore()
-  store.add(records)
+  records = namedRaceFields(data.results);
+  Object.assign(state, { races: records });
+  const store = useRaceListStore();
+  store.add(records);
 }
 
 const update = (state) => {
-  const promise = fetch(requestGetApiRace())
-  goPromise(promise, 'get races', process)
-}
-const fcnUpdate = () => update(state)
+  const promise = fetch(requestGetApiRace());
+  goPromise(promise, "get races", process);
+};
+const fcnUpdate = () => update(state);
 
-onMounted(fcnUpdate)
+onMounted(fcnUpdate);
 </script>
 @/stores/racelist

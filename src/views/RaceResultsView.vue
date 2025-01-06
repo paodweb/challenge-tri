@@ -1,8 +1,8 @@
 <template>
   <TheHeading
     title="Résultats de course"
-    :subtitle="title"
-    v-bind="btn_attrs"
+    :subtitle=title
+    v-bind=btn_attrs
     @on-click="router.push({ name: 'create-result', params: { raceid: id.value } })"
   />
   <TheModal :show="show" @on-confirm="doDelete(action)" @on-close="doClose">

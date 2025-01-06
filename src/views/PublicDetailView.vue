@@ -1,5 +1,5 @@
 <template>
-  <TheHeading title="Détail licencié.e" :subtitle="subtitle" :showButtons="false"></TheHeading>
+  <TheHeading title="Détail licencié.e" :subtitle=subtitle :showButtons="false"></TheHeading>
   <TheDetailLegend></TheDetailLegend>
   <br />
   <ul role="list" class="divide-y divide-gray-100">

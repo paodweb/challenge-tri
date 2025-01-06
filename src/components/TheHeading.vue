@@ -43,12 +43,14 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { ChevronLeftIcon, HomeIcon } from '@heroicons/vue/20/solid'
 
+defineEmits(['on-click'])
+
 const show = ref(true)
 
 const props = defineProps({
   title: String,
   subtitle: String,
-  btnAction: String,
+  btnAction: Boolean,
   btnLabel: String,
   btnType: String,
   showButtons: { type: Boolean, default: true }

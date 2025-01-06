@@ -128,6 +128,7 @@ const namedRaceList = [
   'link',
   'comment'
 ]
+
 const cryptedRaceFields = [
   RACE_TITLE,
   RACE_DATE,

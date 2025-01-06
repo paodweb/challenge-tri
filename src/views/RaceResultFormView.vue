@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="onSubmit" role="form">
-    <TheHeading :title="title" :subtitle="form.licensee" v-bind="btn_attrs"> </TheHeading>
+    <TheHeading :title=title :subtitle=form.licensee.toString() v-bind=btn_attrs> </TheHeading>
     <div class="objects-list">
       <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
@@ -387,7 +387,7 @@ function getLicensee(id) {
 
 onMounted(() => {
   // load licensees list
-  const promise = getLicensees(2) // page number
+  const promise = getLicensees(1) // page number
   promise
     .then((data) => (licensees.value = data))
     .catch((error) => {
