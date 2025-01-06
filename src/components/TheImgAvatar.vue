@@ -22,9 +22,20 @@ const props = defineProps({
   licensee: String
 })
 
+const is_production = () => import.meta.env.MODE === "production"
+
+function display() {
+  console.log(2.1, `env: ${import.meta.env.MODE}`, `path: ${import.meta.env.VITE_LOCAL_AVATAR_PATH}`)
+}
+
 onMounted(() => {
+  display()
   if (props.avatar) {
-    imageUrl.value = `${import.meta.env.VITE_LOCAL_AVATAR_PATH}/${props.avatar}`
+    if (is_production()) {
+      imageUrl.value = "@/assets/images/" + props.avatar
+    } else {
+      imageUrl.value = `${import.meta.env.VITE_LOCAL_AVATAR_PATH}/${props.avatar}`
+    }
   }
   if (!props.female) {
     bgColor.value = 'blue-500'
