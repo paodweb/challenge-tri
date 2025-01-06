@@ -32,6 +32,7 @@ jobs:
         env:
           VITE_BRW_TOKEN: ${{ secrets.BRW_TOKEN }}
           VITE_WIX_IMAGE_URL: ${{ vars.WIX_IMAGE_URL }}
+          VITE_LOCAL_AVATAR_PATH: ${{ vars.LOCAL_AVATAR_PATH }}
           VITE_BRW_BASE_URL: ${{ vars.BRW_BASE_URL }}
           VITE_BRW_PUBLIC_LICENSEES_FILTER_FIELD: ${{ vars.BRW_PUBLIC_LICENSEES_FILTER_FIELD }}
           VITE_BRW_PUBLIC_LICENSEES_FILTER: ${{ vars.BRW_PUBLIC_LICENSEES_FILTER }}

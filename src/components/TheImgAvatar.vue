@@ -24,7 +24,7 @@ const props = defineProps({
 
 onMounted(() => {
   if (props.avatar) {
-    imageUrl.value = `${import.meta.env.VITE_WIX_IMAGE_URL}/${props.avatar}`
+    imageUrl.value = `${import.meta.env.VITE_LOCAL_AVATAR_PATH}/${props.avatar}`
   }
   if (!props.female) {
     bgColor.value = 'blue-500'
